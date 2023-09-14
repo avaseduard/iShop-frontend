@@ -55,24 +55,23 @@ const ProductCard = ({ product }) => {
           />
         }
         actions={[
-          <>
-            <Link relative='path' to={`/product/${slug}`}>
-              <EyeOutlined className='text-warning' />
+          <Link relative='path' to={`/product/${slug}`}>
+            <EyeOutlined className='text-warning' />
+            <br />
+            View product
+          </Link>,
+          <Tooltip title={tooltip}>
+            <a onClick={handleAddToCart} disabled={product.quantity < 1}>
+              <ShoppingCartOutlined className='text-danger' />
               <br />
-              View product
-            </Link>
-            <Tooltip title={tooltip}>
-              <a onClick={handleAddToCart} disabled={product.quantity < 1}>
-                <ShoppingCartOutlined className='text-danger' />
-                <br />
-                {product.quantity < 1 ? 'Out of stock' : 'Add to cart'}
-              </a>
-            </Tooltip>
-          </>,
+              {product.quantity < 1 ? 'Out of stock' : 'Add to cart'}
+            </a>
+          </Tooltip>,
         ]}
       >
+        
         <Meta
-          title={`${title} - $${price}`}
+          title={`${title} - €${price}`}
           description={`${description?.substring(0, 40)}...`}
         />
       </Card>

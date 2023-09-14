@@ -18,7 +18,7 @@ const CategoryList = () => {
     categories.map(category => (
       <div
         key={category._id}
-        className='col btn btn-outline-info btn-lg btn-block btn-raised m-3'
+        className='col btn btn-outline-info btn-lg btn-block btn-raised m-3 bg-white'
       >
         <Link to={`/category/${category.slug}`}>{category.name}</Link>
       </div>

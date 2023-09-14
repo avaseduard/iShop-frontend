@@ -11,10 +11,11 @@ import {
   LogoutOutlined,
   ShoppingOutlined,
   ShoppingCartOutlined,
+  DashboardOutlined,
 } from '@ant-design/icons'
-
 import { logoutUser } from '../../store/reducers/user.reducer'
 import Search from '../forms/Search'
+import { ReactComponent as IShopLogo } from '../../images/logo-color.svg'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -33,6 +34,10 @@ const Header = () => {
   }
 
   const menuItems = [
+    {
+      label: <IShopLogo style={{ width: '50px', height: '50px' }} />,
+      key: 'logo',
+    },
     {
       label: (
         <Link to='/' style={{ textDecoration: 'none' }}>
@@ -63,13 +68,12 @@ const Header = () => {
       icon: <ShoppingCartOutlined />,
     },
     {
-      label: 'user',
+      label: 'User',
       key: 'user',
       icon: <SettingOutlined />,
       children: [
         {
           type: 'group',
-          // label: 'Item 1',
           children: [
             {
               label:
@@ -85,14 +89,10 @@ const Header = () => {
                     Dashboard
                   </Link>
                 ),
-              // key: 'setting:1',
+              icon: <DashboardOutlined />,
             },
             {
-              label: 'Option 2',
-              key: 'setting:2',
-            },
-            {
-              label: 'logout',
+              label: 'Logout',
               key: 'logout',
               icon: <LogoutOutlined />,
               onClick: () => {
@@ -105,24 +105,38 @@ const Header = () => {
     },
     {
       label: (
+        // <Link to='/register' style={{ textDecoration: 'none' }}>
+        //   Register
+        // </Link>
+        // <span>
+        <Search />
+        // </span>
+      ),
+      key: 'search',
+      // icon: <UserAddOutlined />,
+      // className: 'float-end',
+      style: { margin: 'auto' },
+    },
+    {
+      label: (
         <Link to='/register' style={{ textDecoration: 'none' }}>
-          register
+          Register
         </Link>
       ),
       key: 'register',
       icon: <UserAddOutlined />,
-      className: 'float-end',
+      // className: 'float-end',
       style: { marginLeft: 'auto' },
     },
     {
       label: (
         <Link to='/login' style={{ textDecoration: 'none' }}>
-          login
+          Login
         </Link>
       ),
       key: 'login',
       icon: <UserOutlined />,
-      className: 'float-end',
+      // className: 'float-end',
     },
   ]
 
@@ -131,18 +145,12 @@ const Header = () => {
   }
 
   return (
-    <>
       <Menu
         onClick={onClick}
         selectedKeys={[current]}
         mode='horizontal'
         items={menuItems}
       />
-
-      <span className='float-right p-1'>
-        <Search />
-      </span>
-    </>
   )
 }
 export default Header

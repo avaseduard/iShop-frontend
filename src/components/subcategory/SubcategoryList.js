@@ -18,14 +18,14 @@ const SubcategoryList = () => {
     subcategories.map(subcategory => (
       <div
         key={subcategory._id}
-        className='col btn btn-outline-info btn-lg btn-block btn-raised m-3'
+        className='col btn btn-outline-info btn-lg btn-block btn-raised m-3 bg-white'
       >
         <Link to={`/subcategory/${subcategory.slug}`}>{subcategory.name}</Link>
       </div>
     ))
 
   return (
-    <div className='container'>
+    <div className='container mb-5'>
       <div className='row'>
         {loading ? (
           <h4 className='text-center'>Loading...</h4>

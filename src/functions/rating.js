@@ -13,9 +13,13 @@ export const showAverageRating = product => {
           rating={rating}
           // numberOfStars={5}
           starRatedColor='blue'
-          starDimension='24px'
+          starDimension='28px'
         />{' '}
-        ({product.ratings.length})
+        (
+        {product.ratings.length > 1
+          ? `${product.ratings.length} ratings`
+          : `${product.ratings.length} rating`}
+        )
       </span>
     </div>
   )
