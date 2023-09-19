@@ -69,8 +69,8 @@ const ProductCreate = () => {
     createProduct(values, user.user.token)
       .then(res => {
         console.log(res)
-        // toast.success(`"${res.data.title}" product has been created`)
-        // navigate('/admin/products')
+        toast.success(`"${res.data.title}" product has been created`)
+        navigate('/admin/products')
       })
       .catch(error => {
         console.log(error)

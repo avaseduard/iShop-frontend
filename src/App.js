@@ -48,6 +48,9 @@ const CreateCouponPage = lazy(() =>
   import('./pages/admin/coupon/CreateCouponPage')
 )
 const Payment = lazy(() => import('./pages/Payment'))
+const CarouselManager = lazy(() =>
+  import('./pages/admin/carousel-manager/CarouselManager')
+)
 
 const App = () => {
   const dispatch = useDispatch()
@@ -78,7 +81,7 @@ const App = () => {
     <Suspense
       fallback={
         <h1 className='col text-center p-5'>
-          <LoadingOutlined  />
+          <LoadingOutlined />
         </h1>
       }
     >
@@ -116,6 +119,7 @@ const App = () => {
           <Route path='/admin/product/:slug' element={<ProductUpdate />} />
           <Route path='/admin/products' element={<AllProducts />} />
           <Route path='/admin/coupon' element={<CreateCouponPage />} />
+          <Route path='/admin/carousel-manager' element={<CarouselManager />} />
         </Route>
       </Routes>
     </Suspense>

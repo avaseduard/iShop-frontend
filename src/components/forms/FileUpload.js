@@ -41,7 +41,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
                 setValues({ ...values, images: allUploadedFiles })
               })
               .catch(err => {
-                console.log('IMAGE UPLOAD FAILED -->', err)
+                console.log('PRODUCT IMAGE UPLOAD FAILED -->', err)
                 setLoading(false)
               })
           },

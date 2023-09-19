@@ -40,6 +40,12 @@ const AdminNav = () => (
       </li>
 
       <li className='nav-item'>
+        <Link to='/admin/carousel-manager' className='nav-link'>
+          Carousel Manager
+        </Link>
+      </li>
+
+      <li className='nav-item'>
         <Link to='/user/password' className='nav-link'>
           Password
         </Link>
