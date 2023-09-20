@@ -13,10 +13,6 @@ import {
 
 const Home = () => (
   <>
-    {/* <div className='jumbotron h1 text-center text-danger font-weight-bold'>
-      <Jumbotron text={['New arrivals', 'Best sellers', 'Special offers']} />
-    </div> */}
-
     <HomeCarousel />
 
     <h4 className='jumbotron text-center p-3 mt-5 mb-5 display-4'>

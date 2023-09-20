@@ -17,6 +17,7 @@ To do:
 - modify shipping to free shipping or pick-up
 - create home page carousel
 - client address in dashboard and database
+- add a padding on top of every admin and user dashboard section
 
 Helpers:
 - € symbol

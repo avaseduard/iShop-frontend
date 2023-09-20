@@ -37,8 +37,6 @@ const CarouselManager = () => {
       })
       .catch(error => console.log('GET ALL IMAGES FAILED FE -->', error))
 
-  console.log(allImages)
-
   // Upload images, resize, upload to cloudinary and send the urls to db
   const imageUploadAndResize = e => {
     let files = e.target.files
