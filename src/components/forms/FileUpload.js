@@ -2,6 +2,7 @@ import Resizer from 'react-image-file-resizer'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { Avatar, Badge } from 'antd'
+import { removeCloudinaryImage, uploadCloudinaryImage } from '../../functions/cloudinary'
 
 const FileUpload = ({ values, setValues, setLoading }) => {
   const { user } = useSelector(state => ({ ...state }))
@@ -22,16 +23,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
           0,
           uri => {
             // Send to server
-            axios
-              .post(
-                `${process.env.REACT_APP_API}/uploadimages`,
-                { image: uri },
-                {
-                  headers: {
-                    authtoken: user.user.token,
-                  },
-                }
-              )
+            uploadCloudinaryImage(uri, user.user.token)
               // Get url response from server
               .then(res => {
                 setLoading(false)
@@ -54,16 +46,7 @@ const FileUpload = ({ values, setValues, setLoading }) => {
   const handleImageRemove = id => {
     setLoading(true)
     // Send image id (and token) to back end
-    axios
-      .post(
-        `${process.env.REACT_APP_API}/removeimage`,
-        { public_id: id },
-        {
-          headers: {
-            authtoken: user.user.token,
-          },
-        }
-      )
+    removeCloudinaryImage(id, user.user.token)
       .then(res => {
         setLoading(false)
         // Remove image with matching id from images
