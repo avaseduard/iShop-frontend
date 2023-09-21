@@ -7,8 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Checkbox, Menu, Radio, Slider } from 'antd'
 import SubMenu from 'antd/es/menu/SubMenu'
 import {
+  ApartmentOutlined,
+  AppstoreOutlined,
+  BgColorsOutlined,
   DollarOutlined,
   DownSquareOutlined,
+  DropboxOutlined,
+  SketchOutlined,
   StarOutlined,
 } from '@ant-design/icons'
 import { setSearch } from '../store/reducers/search.reducer'
@@ -131,7 +136,6 @@ const Shop = () => {
 
   // Load products based on subcategory
   const handleSubcategory = subcategory => {
-    // console.log('SUBCATEGORY -->', subcategory)
     dispatch(setSearch(''))
     setSubcategory(subcategory)
     fetchProducts({ subcategory: subcategory })
@@ -161,7 +165,7 @@ const Shop = () => {
   return (
     <div className='container-fluid'>
       <div className='row'>
-        <div className='col-md-3 pt-2'>
+        <div className='col-md-3 pt-3'>
           <h4>Filter</h4>
           <hr />
 
@@ -172,8 +176,8 @@ const Shop = () => {
             {/* Price filter */}
             <SubMenu
               title={
-                <span className='h6'>
-                  <DollarOutlined /> Price $
+                <span className='h5'>
+                  <DollarOutlined className='align-bottom pb-3' /> Price $
                 </span>
               }
               key={1}
@@ -190,11 +194,29 @@ const Shop = () => {
               </div>
             </SubMenu>
 
+            {/* Rating filter */}
+            <SubMenu
+              title={
+                <span className='h5'>
+                  <StarOutlined className='align-bottom pb-3' /> Rating
+                </span>
+              }
+              key={'3'}
+            >
+              <div className='pr-4 pb4 pl-2'>
+                <Star starClick={handleStarClick} numberOfStars={5} />
+                <Star starClick={handleStarClick} numberOfStars={4} />
+                <Star starClick={handleStarClick} numberOfStars={3} />
+                <Star starClick={handleStarClick} numberOfStars={2} />
+                <Star starClick={handleStarClick} numberOfStars={1} />
+              </div>
+            </SubMenu>
+
             {/* Categories filter */}
             <SubMenu
               title={
-                <span className='h6'>
-                  <DownSquareOutlined /> Categories
+                <span className='h5'>
+                  <AppstoreOutlined className='align-bottom pb-3' /> Categories
                 </span>
               }
               key={2}
@@ -214,29 +236,12 @@ const Shop = () => {
               ))}
             </SubMenu>
 
-            {/* Rating filter */}
-            <SubMenu
-              title={
-                <span className='h6'>
-                  <StarOutlined /> Rating
-                </span>
-              }
-              key={'3'}
-            >
-              <div className='pr-4 pb4 pl-2'>
-                <Star starClick={handleStarClick} numberOfStars={5} />
-                <Star starClick={handleStarClick} numberOfStars={4} />
-                <Star starClick={handleStarClick} numberOfStars={3} />
-                <Star starClick={handleStarClick} numberOfStars={2} />
-                <Star starClick={handleStarClick} numberOfStars={1} />
-              </div>
-            </SubMenu>
-
             {/* Subcategories filter */}
             <SubMenu
               title={
-                <span className='h6'>
-                  <DownSquareOutlined /> Subcategories
+                <span className='h5'>
+                  <ApartmentOutlined className='align-bottom pb-3' />{' '}
+                  Subcategories
                 </span>
               }
               key={4}
@@ -257,8 +262,8 @@ const Shop = () => {
             {/* Brand filter */}
             <SubMenu
               title={
-                <span className='h6'>
-                  <DownSquareOutlined /> Brands
+                <span className='h5'>
+                  <SketchOutlined className='align-bottom pb-3' /> Brands
                 </span>
               }
               key={5}
@@ -282,8 +287,8 @@ const Shop = () => {
             {/* Color filter */}
             <SubMenu
               title={
-                <span className='h6'>
-                  <DownSquareOutlined /> Color
+                <span className='h5'>
+                  <BgColorsOutlined className='align-bottom pb-3' /> Color
                 </span>
               }
               key={6}
@@ -307,8 +312,9 @@ const Shop = () => {
             {/* Shipping filter */}
             <SubMenu
               title={
-                <span className='h6'>
-                  <DownSquareOutlined /> Shipping
+                <span className='h5'>
+                  <DropboxOutlined className='align-bottom pb-3' /> Locker
+                  shipping
                 </span>
               }
               key={7}
@@ -336,13 +342,13 @@ const Shop = () => {
         </div>
 
         {/* Products */}
-        <div className='col-md-9 pt-2'>
+        <div className='col-md-9 pt-3'>
           {loading ? (
             <h4 className='text-danger'>Loading...</h4>
           ) : (
             <h4>Products</h4>
           )}
-
+          <hr />
           {products.length < 1 && <p>No products found</p>}
 
           <div className='row pb-5'>
