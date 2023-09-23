@@ -162,183 +162,193 @@ const Shop = () => {
     fetchProducts({ shipping: e.target.value })
   }
 
+  const menuItems = [
+    // Price filter
+    {
+      // label: 'Price $',
+      label: 'Price $',
+      key: '1',
+      icon: <DollarOutlined />,
+      children: [
+        {
+          type: 'group',
+          label: (
+            <Slider
+              range
+              value={price}
+              onChange={handleSlider}
+              // defaultValue={[0, 9999]}
+              max='9999'
+              // className='ml-1 mr-1'
+            />
+          ),
+        },
+      ],
+    },
+    // Rating filter
+    {
+      label: 'Rating',
+      key: '2',
+      icon: <StarOutlined />,
+      children: [
+        {
+          type: 'group',
+          label: <Star starClick={handleStarClick} numberOfStars={5} />,
+        },
+        {
+          type: 'group',
+          label: <Star starClick={handleStarClick} numberOfStars={4} />,
+        },
+        {
+          type: 'group',
+          label: <Star starClick={handleStarClick} numberOfStars={3} />,
+        },
+        {
+          type: 'group',
+          label: <Star starClick={handleStarClick} numberOfStars={2} />,
+        },
+        {
+          type: 'group',
+          label: <Star starClick={handleStarClick} numberOfStars={1} />,
+        },
+      ],
+    },
+    // Categories filter
+    {
+      label: 'Categories',
+      key: '3',
+      icon: <AppstoreOutlined />,
+      children: [
+        {
+          type: 'group',
+          label: categories.map(category => (
+            <div key={category._id}>
+              <Checkbox
+                value={category._id}
+                name='category'
+                onChange={handleCheck}
+                checked={categoryIds.includes(category._id)}
+              >
+                {category.name}
+              </Checkbox>
+            </div>
+          )),
+        },
+      ],
+    },
+    // Subcategories filter
+    {
+      label: 'Subcategories',
+      key: '4',
+      icon: <ApartmentOutlined />,
+      children: [
+        {
+          type: 'group',
+          label: subcategories.map(subcategory => (
+            <div
+              key={subcategory._id}
+              onClick={() => handleSubcategory(subcategory)}
+              className='p-1 m-1 badge badge-secondary'
+              style={{ cursor: 'pointer' }}
+            >
+              {subcategory.name}
+            </div>
+          )),
+        },
+      ],
+    },
+    // Brand filter
+    {
+      label: 'Brands',
+      key: '5',
+      icon: <SketchOutlined />,
+      children: [
+        {
+          type: 'group',
+          label: brands.map(brand => (
+            <Radio
+              key={brand}
+              value={brand}
+              name={brand}
+              checked={brand === selectedBrand}
+              onChange={handleBrand}
+              // className='pb-1 pl-1 pr-4'
+            >
+              {brand}
+            </Radio>
+          )),
+        },
+      ],
+    },
+    // Color filter
+    {
+      label: 'Color',
+      key: '6',
+      icon: <BgColorsOutlined />,
+      children: [
+        {
+          type: 'group',
+          label: colors.map(color => (
+            <div key={color}>
+              <Radio
+                value={color}
+                name={color}
+                checked={color === selectedColor}
+                onChange={handleColor}
+                // className='pb-1 pl-1 pr-4'
+              >
+                {color}
+              </Radio>
+            </div>
+          )),
+        },
+      ],
+    },
+    // Locker shipping filter
+    {
+      label: 'Locker shipping',
+      key: '7',
+      icon: <DropboxOutlined />,
+      children: [
+        {
+          type: 'group',
+          label: (
+            <div>
+              <Checkbox
+                value='Yes'
+                checked={shipping === 'Yes'}
+                onChange={handleShipping}
+                // className='pb-1 pl-1 pr-4'
+              >
+                Yes
+              </Checkbox>
+              <Checkbox
+                value='No'
+                checked={shipping === 'No'}
+                onChange={handleShipping}
+                // className='pb-1 pl-1 pr-4'
+              >
+                No
+              </Checkbox>
+            </div>
+          ),
+        },
+      ],
+    },
+  ]
+
   return (
     <div className='container-fluid'>
       <div className='row'>
         <div className='col-md-3 pt-3'>
+          {/* Filters */}
           <h4>Filter</h4>
           <hr />
-
           <Menu
+            items={menuItems}
             mode='inline'
             defaultOpenKeys={['1', '2', '3', '4', '5', '6', '7']}
-          >
-            {/* Price filter */}
-            <SubMenu
-              title={
-                <span className='h5'>
-                  <DollarOutlined className='align-bottom pb-3' /> Price $
-                </span>
-              }
-              key={1}
-            >
-              <div>
-                <Slider
-                  range
-                  value={price}
-                  onChange={handleSlider}
-                  // defaultValue={[0, 9999]}
-                  max='9999'
-                  className='ml-4 mr-4'
-                />
-              </div>
-            </SubMenu>
-
-            {/* Rating filter */}
-            <SubMenu
-              title={
-                <span className='h5'>
-                  <StarOutlined className='align-bottom pb-3' /> Rating
-                </span>
-              }
-              key={'3'}
-            >
-              <div className='pr-4 pb4 pl-2'>
-                <Star starClick={handleStarClick} numberOfStars={5} />
-                <Star starClick={handleStarClick} numberOfStars={4} />
-                <Star starClick={handleStarClick} numberOfStars={3} />
-                <Star starClick={handleStarClick} numberOfStars={2} />
-                <Star starClick={handleStarClick} numberOfStars={1} />
-              </div>
-            </SubMenu>
-
-            {/* Categories filter */}
-            <SubMenu
-              title={
-                <span className='h5'>
-                  <AppstoreOutlined className='align-bottom pb-3' /> Categories
-                </span>
-              }
-              key={2}
-            >
-              {categories.map(category => (
-                <div key={category._id}>
-                  <Checkbox
-                    value={category._id}
-                    name='category'
-                    onChange={handleCheck}
-                    checked={categoryIds.includes(category._id)}
-                  >
-                    {category.name}
-                  </Checkbox>
-                  <br />
-                </div>
-              ))}
-            </SubMenu>
-
-            {/* Subcategories filter */}
-            <SubMenu
-              title={
-                <span className='h5'>
-                  <ApartmentOutlined className='align-bottom pb-3' />{' '}
-                  Subcategories
-                </span>
-              }
-              key={4}
-            >
-              {subcategories.map(subcategory => (
-                <div
-                  key={subcategory._id}
-                  onClick={() => handleSubcategory(subcategory)}
-                  className='p-1 m-1 badge badge-secondary'
-                  style={{ cursor: 'pointer' }}
-                >
-                  {subcategory.name}
-                </div>
-                // <br />
-              ))}
-            </SubMenu>
-
-            {/* Brand filter */}
-            <SubMenu
-              title={
-                <span className='h5'>
-                  <SketchOutlined className='align-bottom pb-3' /> Brands
-                </span>
-              }
-              key={5}
-            >
-              {brands.map(brand => (
-                <div key={brand}>
-                  <Radio
-                    value={brand}
-                    name={brand}
-                    checked={brand === selectedBrand}
-                    onChange={handleBrand}
-                    className='pb-1 pl-1 pr-4'
-                  >
-                    {brand}
-                  </Radio>
-                  <br />
-                </div>
-              ))}
-            </SubMenu>
-
-            {/* Color filter */}
-            <SubMenu
-              title={
-                <span className='h5'>
-                  <BgColorsOutlined className='align-bottom pb-3' /> Color
-                </span>
-              }
-              key={6}
-            >
-              {colors.map(color => (
-                <div key={color}>
-                  <Radio
-                    value={color}
-                    name={color}
-                    checked={color === selectedColor}
-                    onChange={handleColor}
-                    className='pb-1 pl-1 pr-4'
-                  >
-                    {color}
-                  </Radio>
-                  <br />
-                </div>
-              ))}
-            </SubMenu>
-
-            {/* Shipping filter */}
-            <SubMenu
-              title={
-                <span className='h5'>
-                  <DropboxOutlined className='align-bottom pb-3' /> Locker
-                  shipping
-                </span>
-              }
-              key={7}
-            >
-              <>
-                <Checkbox
-                  value='Yes'
-                  checked={shipping === 'Yes'}
-                  onChange={handleShipping}
-                  className='pb-1 pl-1 pr-4'
-                >
-                  Yes
-                </Checkbox>
-                <Checkbox
-                  value='No'
-                  checked={shipping === 'No'}
-                  onChange={handleShipping}
-                  className='pb-1 pl-1 pr-4'
-                >
-                  No
-                </Checkbox>
-              </>
-            </SubMenu>
-          </Menu>
+          />
         </div>
 
         {/* Products */}
