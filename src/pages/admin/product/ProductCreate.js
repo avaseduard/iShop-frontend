@@ -14,19 +14,31 @@ import { LoadingOutlined } from '@ant-design/icons'
 
 // Initial keys and values of product state
 const intitialState = {
-  title: 'Example product 1',
-  description: 'Description of example product 1',
-  price: '1234',
+  title: '',
+  description: '',
+  price: '',
   categories: [],
   category: '',
   subcategories: [],
-  shipping: 'Yes',
-  quantity: '3',
+  shipping: '',
+  quantity: '',
   images: [],
-  colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
-  color: 'Silver',
+  colors: [
+    'White',
+    'Black',
+    'Grey',
+    'Yellow',
+    'Red',
+    'Blue',
+    'Green',
+    'Brown',
+    'Pink',
+    'Orange',
+    'Purple',
+  ],
+  color: '',
   brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS'],
-  brand: 'Apple',
+  brand: '',
 }
 
 const ProductCreate = () => {
@@ -87,7 +99,11 @@ const ProductCreate = () => {
         </div>
 
         <div className='col-md-10'>
-          {loading ? <LoadingOutlined className='h1 text-danger' /> : <h4>Create product</h4>}
+          {loading ? (
+            <LoadingOutlined className='h1 text-danger' />
+          ) : (
+            <h4>Create product</h4>
+          )}
           <hr />
 
           <div className='p-3'>

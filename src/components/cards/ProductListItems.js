@@ -56,7 +56,7 @@ const ProductListItems = ({ product }) => {
       </li>
 
       <li className='list-group-item'>
-        Shipping{' '}
+        Locker shipping{' '}
         <span className='badge badge-info m-1 float-right'>{shipping}</span>
       </li>
 

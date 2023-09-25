@@ -37,6 +37,7 @@ const ProductCreateForm = ({
           className='form-control'
           value={title}
           onChange={handleChange}
+          placeholder="Enter item's title"
         />
       </div>
 
@@ -48,6 +49,7 @@ const ProductCreateForm = ({
           className='form-control'
           value={description}
           onChange={handleChange}
+          placeholder="Enter item's description"
         />
       </div>
 
@@ -59,17 +61,18 @@ const ProductCreateForm = ({
           className='form-control'
           value={price}
           onChange={handleChange}
+          placeholder="Enter item's price"
         />
       </div>
 
       <div className='form-group'>
-        <label>Shipping</label>
+        <label>Locker shipping</label>
         <select
           name='shipping'
           className='form-control'
           onChange={handleChange}
         >
-          <option>Please select...</option>
+          <option>Choose shipping</option>
           <option value='No'>No</option>
           <option value='Yes'>Yes</option>
         </select>
@@ -83,13 +86,14 @@ const ProductCreateForm = ({
           className='form-control'
           value={quantity}
           onChange={handleChange}
+          placeholder="Enter item's quantity"
         />
       </div>
 
       <div className='form-group'>
         <label>Color</label>
         <select name='color' className='form-control' onChange={handleChange}>
-          <option>Please select...</option>
+          <option>Choose item's color</option>
           {colors.map(color => (
             <option key={color} value={color}>
               {color}
@@ -101,7 +105,7 @@ const ProductCreateForm = ({
       <div className='form-group'>
         <label>Brand</label>
         <select name='brand' className='form-control' onChange={handleChange}>
-          <option>Please select...</option>
+          <option>Choose item's brand</option>
           {brands.map(brand => (
             <option key={brand} value={brand}>
               {brand}
@@ -117,7 +121,7 @@ const ProductCreateForm = ({
           onChange={handleCategoryChange}
           className='form-control'
         >
-          <option>Please select...</option>
+          <option>Choose item's category</option>
           {categories.length > 0 &&
             categories.map(category => (
               <option key={category._id} value={category._id}>
@@ -135,7 +139,7 @@ const ProductCreateForm = ({
             style={{
               width: '100%',
             }}
-            placeholder='please select'
+            placeholder="Choose item's subcategory"
             value={subcategories}
             onChange={value => setValues({ ...values, subcategories: value })}
           >

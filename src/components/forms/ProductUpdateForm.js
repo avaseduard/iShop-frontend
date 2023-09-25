@@ -64,7 +64,7 @@ const ProductUpdateForm = ({
       </div>
 
       <div className='form-group'>
-        <label>Shipping</label>
+        <label>Locker shipping</label>
         <select
           value={shipping}
           name='shipping'

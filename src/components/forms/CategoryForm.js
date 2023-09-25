@@ -1,6 +1,6 @@
 const CategoryForm = ({ handleSubmit, name, setName }) => (
   <form onSubmit={handleSubmit} className='form-group'>
-    <label>Enter new category name</label>
+    <br />
     <input
       type='text'
       className='form-control'
@@ -8,6 +8,7 @@ const CategoryForm = ({ handleSubmit, name, setName }) => (
       value={name}
       autoFocus
       required
+      placeholder='Enter new category name'
     />
     <br />
     <button className='btn btn-outline-primary'>Save</button>

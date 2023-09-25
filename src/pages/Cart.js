@@ -47,7 +47,7 @@ const Cart = () => {
                     <th scope='col'>Brand</th>
                     <th scope='col'>Color</th>
                     <th scope='col'>Count</th>
-                    <th scope='col'>Shipping</th>
+                    <th scope='col'>Locker shipping</th>
                     <th scope='col'>Remove</th>
                   </tr>
                 </thead>
