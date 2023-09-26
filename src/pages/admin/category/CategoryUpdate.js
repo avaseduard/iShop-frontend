@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react'
 import AdminNav from '../../../components/nav/AdminNav'
-import {
-  getCategory,
-  updateCategory,
-} from '../../../functions/category'
+import { getCategory, updateCategory } from '../../../functions/category'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -34,7 +31,9 @@ const CategoryUpdate = () => {
       .then(res => {
         setLoading(false)
         setName('')
-        toast.success(`"${res.data.name}" category has been updated`)
+        toast.success(
+          `The '${slug}' category has been updated to '${res.data.name}'`
+        )
         navigate('/admin/category')
       })
       .catch(err => {

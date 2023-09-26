@@ -52,13 +52,13 @@ const CategoryCreate = () => {
   // Delete a category
   const handleRemove = async slug => {
     // Prompt admin for confirmation
-    if (window.confirm(`Are you sure you want to delete ${slug} category`)) {
+    if (window.confirm(`Are you sure you want to delete the '${slug}' category`)) {
       setLoading(true)
-      // Use remobve category method to remove one form database
+      // Use remove category method to remove one from database
       removeCategory(slug, user.user.token)
         .then(res => {
           setLoading(false)
-          toast.success(`${res.data.name} category successfully removed`)
+          toast.success(`The '${res.data.name}' category successfully removed`)
           loadCategories()
         })
         .catch(err => {
@@ -78,21 +78,27 @@ const CategoryCreate = () => {
   return (
     <div className='container-fluid'>
       <div className='row'>
+
         <div className='col-md-2'>
           <AdminNav />
         </div>
+
         <div className='col'>
           {loading ? (
             <h4 className='text-danger'>Loading...</h4>
           ) : (
             <h4>Create category</h4>
           )}
+
           <CategoryForm
             handleSubmit={handleSubmit}
             name={name}
             setName={setName}
           />
+          <br />
+
           <LocalSearch keyword={keyword} setKeyword={setKeyword} />
+
           {categories.filter(searched(keyword)).map(category => (
             <div key={category._id} className='alert alert-secondary'>
               {category.name}{' '}

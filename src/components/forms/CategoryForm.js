@@ -8,7 +8,7 @@ const CategoryForm = ({ handleSubmit, name, setName }) => (
       value={name}
       autoFocus
       required
-      placeholder='Enter new category name'
+      placeholder='Enter new value'
     />
     <br />
     <button className='btn btn-outline-primary'>Save</button>

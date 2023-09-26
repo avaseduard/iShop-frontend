@@ -51,6 +51,8 @@ const Payment = lazy(() => import('./pages/Payment'))
 const CarouselManager = lazy(() =>
   import('./pages/admin/carousel-manager/CarouselManager')
 )
+const ColorsCreate = lazy(() => import('./pages/admin/colors/CreateColor'))
+const UpdateColor = lazy(() => import('./pages/admin/colors/UpdateColor'))
 
 const App = () => {
   const dispatch = useDispatch()
@@ -115,6 +117,8 @@ const App = () => {
             path='/admin/subcategory/:slug'
             element={<SubcategoryUpdate />}
           />
+          <Route path='/admin/colors' element={<ColorsCreate />} />
+          <Route path='/admin/color/:slug' element={<UpdateColor />} />
           <Route path='/admin/product' element={<ProductCreate />} />
           <Route path='/admin/product/:slug' element={<ProductUpdate />} />
           <Route path='/admin/products' element={<AllProducts />} />
