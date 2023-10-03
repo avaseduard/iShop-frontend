@@ -3,8 +3,8 @@ import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 
 const Orders = ({ orders, handleStatusChange }) => {
   return orders.map(order => (
-    <div className='pb-5'>
-      <div key={order._id} className='row'>
+    <div key={order._id} className='pb-5'>
+      <div className='row'>
         <ShowPaymentInfo order={order} showStatus={false} />
       </div>
       <br />

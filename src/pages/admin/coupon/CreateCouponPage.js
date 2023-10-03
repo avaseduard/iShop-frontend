@@ -63,11 +63,13 @@ const CreateCouponPage = () => {
           <AdminNav />
         </div>
         <div className='col-md-10'>
+          <br />
           {loading ? (
             <h4 className='text-danger'>Loading...</h4>
           ) : (
             <h4>Manage coupons</h4>
           )}
+          <hr />
 
           <form onSubmit={handleSubmit}>
             <div className='form-group'>

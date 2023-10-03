@@ -27,10 +27,13 @@ const History = () => {
         <div className='col-md-2'>
           <UserNav />
         </div>
+
         <div className='col text-center'>
+          <br />
           <h4>
             {orders.length > 0 ? `${orders.length} orders` : 'No orders yet'}
           </h4>
+          <hr />
 
           {orders.map((order, index) => (
             <div key={index} className='m-5 p-3 card'>

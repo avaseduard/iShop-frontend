@@ -11,6 +11,7 @@ import {
 } from '../../../functions/category'
 import FileUpload from '../../../components/forms/FileUpload'
 import { LoadingOutlined } from '@ant-design/icons'
+import { listAllColors } from '../../../functions/color'
 
 // Initial keys and values of product state
 const intitialState = {
@@ -23,19 +24,7 @@ const intitialState = {
   shipping: '',
   quantity: '',
   images: [],
-  colors: [
-    'White',
-    'Black',
-    'Grey',
-    'Yellow',
-    'Red',
-    'Blue',
-    'Green',
-    'Brown',
-    'Pink',
-    'Orange',
-    'Purple',
-  ],
+  colors: [],
   color: '',
   brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS'],
   brand: '',
@@ -49,16 +38,42 @@ const ProductCreate = () => {
   const [showSubcategories, setShowSubcategories] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  // Get the categories from backend and set them in state
-  const loadCategories = () =>
-    getCategories().then(categories =>
-      setValues({ ...values, categories: categories.data })
-    )
-
   // When page loads, populate categories for dropdown
   useEffect(() => {
+    loadColors()
     loadCategories()
   }, [])
+
+  // Get the available colors from backend and set them in state
+  const loadColors = () => {
+    setLoading(true)
+    listAllColors()
+      .then(res => {
+        setLoading(false)
+        setValues(values => ({
+          ...values,
+          colors: res.data,
+        }))
+      })
+      .catch(error => {
+        setLoading(false)
+        console.log('LIST ALL COLORS FAILED IN FE -->', error)
+      })
+  }
+
+  // Get the categories from backend and set them in state
+  const loadCategories = () => {
+    setLoading(true)
+    getCategories()
+      .then(categories => {
+        setLoading(false)
+        setValues(values => ({ ...values, categories: categories.data }))
+      })
+      .catch(error => {
+        setLoading(false)
+        console.log('CATEGORIES LOADING FAILED IN FE -->', error)
+      })
+  }
 
   // When the admin selects a category, send the id to backend, return the subcategories and populate the dropdown
   const handleCategoryChange = e => {
@@ -80,12 +95,11 @@ const ProductCreate = () => {
     e.preventDefault()
     createProduct(values, user.user.token)
       .then(res => {
-        console.log(res)
-        toast.success(`"${res.data.title}" product has been created`)
+        toast.success(`'${res.data.title}' product has been created`)
         navigate('/admin/products')
       })
       .catch(error => {
-        console.log(error)
+        console.log('CREATE PRODUCT FAILED IN FE -->', error)
         // Show the error message that we're sending from backend
         toast.error(error.response.data.error)
       })
@@ -99,6 +113,7 @@ const ProductCreate = () => {
         </div>
 
         <div className='col-md-10'>
+          <br />
           {loading ? (
             <LoadingOutlined className='h1 text-danger' />
           ) : (

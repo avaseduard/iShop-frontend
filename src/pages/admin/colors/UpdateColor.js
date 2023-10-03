@@ -44,11 +44,14 @@ const UpdateColor = () => {
           <AdminNav />
         </div>
         <div className='col'>
+          <br />
           {loading ? (
             <h4 className='text-danger'>Loading...</h4>
           ) : (
             <h4>Update color</h4>
           )}
+          <hr />
+
           <CategoryForm
             handleSubmit={handleSubmit}
             name={name}

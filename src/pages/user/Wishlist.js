@@ -25,9 +25,13 @@ const Wishlist = () => {
         <div className='col-md-2'>
           <UserNav />
         </div>
+
         <div className='col'>
+          <br />
           <h4>Wishlist</h4>
-          {wishlist.map(product => (
+          <hr />
+
+          {wishlist.length ? wishlist.map(product => (
             <div key={product._id} className='alert alert-secondary'>
               <Link to={`/product/${product.slug}`}>{product.title}</Link>
               <span
@@ -37,7 +41,7 @@ const Wishlist = () => {
                 <DeleteOutlined />
               </span>
             </div>
-          ))}
+          )) : 'You have no items saved in your wishlist.'}
         </div>
       </div>
     </div>

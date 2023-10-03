@@ -28,12 +28,9 @@ const CarouselManager = () => {
   const loadImages = () =>
     getAllImagesUrls(user.user.token)
       .then(res => {
-        // const { images } = res.data
         const images = []
         res.data.map(image => images.push(image.images))
         setAllImages(images)
-        // console.log(images)
-        // setAllImages(images)
       })
       .catch(error => console.log('GET ALL IMAGES FAILED FE -->', error))
 
@@ -120,6 +117,7 @@ const CarouselManager = () => {
         </div>
 
         <div className='col'>
+          <br />
           {/* Title */}
           {loading ? (
             <h4 className='text-danger'>Loading...</h4>

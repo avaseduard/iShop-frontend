@@ -18,18 +18,16 @@ const AdminProductCard = ({ product, handleRemove }) => {
         />
       }
       actions={[
-        <>
-          <Link relative='path' to={`../../admin/product/${slug}`}>
-            <EditOutlined className='text-warning' />
-          </Link>
-          <DeleteOutlined
-            onClick={() => handleRemove(slug)}
-            className='text-danger'
-          />
-        </>,
+        <Link relative='path' to={`../../admin/product/${slug}`}>
+          <EditOutlined className='text-warning' />
+        </Link>,
+        <DeleteOutlined
+          onClick={() => handleRemove(slug)}
+          className='text-danger'
+        />,
       ]}
     >
-      <Meta title={title} description={`${description?.substring(0, 40)}...`} />
+      <Meta title={title} description={`${description?.substring(0, 60)}...`} />
     </Card>
   )
 }

@@ -93,11 +93,13 @@ const SubcategoryCreate = () => {
         </div>
 
         <div className='col'>
+          <br />
           {loading ? (
             <h4 className='text-danger'>Loading...</h4>
           ) : (
             <h4>Create subcategory</h4>
           )}
+          <hr />
 
           <div className='form-group'>
             <label>Select parent category</label>

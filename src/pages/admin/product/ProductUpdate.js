@@ -121,14 +121,13 @@ const ProductUpdate = () => {
         </div>
 
         <div className='col-md-10'>
+          <br />
           {loading ? (
             <LoadingOutlined className='h1 text-danger' />
           ) : (
             <h4>Update product</h4>
           )}
           <hr />
-
-          {/* {JSON.stringify(values)} */}
 
           <div className='p-3'>
             <FileUpload
@@ -151,6 +150,7 @@ const ProductUpdate = () => {
             selectedCategory={selectedCategory}
           />
         </div>
+        <hr />
       </div>
     </div>
   )

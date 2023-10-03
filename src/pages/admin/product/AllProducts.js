@@ -49,11 +49,13 @@ const AllProducts = () => {
         </div>
 
         <div className='col'>
+          <br />
           {loading ? (
             <h4 className='text-danger'>Loading...</h4>
           ) : (
             <h4>All products</h4>
           )}
+          <hr />
           <div className='row'>
             {products.map(product => (
               <div key={product._id} className='col-md-4 pb-3'>

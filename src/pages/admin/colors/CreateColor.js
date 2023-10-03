@@ -78,11 +78,13 @@ const ColorsCreate = () => {
         </div>
 
         <div className='col'>
+          <br />
           {loading ? (
             <h4 className='text-danger'>Loading...</h4>
           ) : (
             <h4>Create colors</h4>
           )}
+          <hr />
 
           <CategoryForm
             handleSubmit={handleSubmit}

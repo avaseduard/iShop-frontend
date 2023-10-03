@@ -15,7 +15,6 @@ const AdminDashboard = () => {
 
   const loadOrders = () =>
     getAllOrders(user.user.token).then(res => {
-      console.log(JSON.stringify(res.data, null, 4))
       setOrders(res.data)
     })
 
@@ -34,8 +33,12 @@ const AdminDashboard = () => {
         <div className='col-md-2'>
           <AdminNav />
         </div>
+
         <div className='col'>
+          <br />
           <h4>Admin dashboard</h4>
+          <hr />
+
           <Orders orders={orders} handleStatusChange={handleStatusChange} />
         </div>
       </div>

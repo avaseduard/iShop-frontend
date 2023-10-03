@@ -28,7 +28,6 @@ const ProductCreateForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-
       <div className='form-group'>
         <label>Title</label>
         <input
@@ -37,7 +36,7 @@ const ProductCreateForm = ({
           className='form-control'
           value={title}
           onChange={handleChange}
-          placeholder="Enter item's title"
+          placeholder="enter item's title"
         />
       </div>
 
@@ -49,7 +48,7 @@ const ProductCreateForm = ({
           className='form-control'
           value={description}
           onChange={handleChange}
-          placeholder="Enter item's description"
+          placeholder="enter item's description"
         />
       </div>
 
@@ -61,7 +60,7 @@ const ProductCreateForm = ({
           className='form-control'
           value={price}
           onChange={handleChange}
-          placeholder="Enter item's price"
+          placeholder="enter item's price"
         />
       </div>
 
@@ -72,7 +71,7 @@ const ProductCreateForm = ({
           className='form-control'
           onChange={handleChange}
         >
-          <option>Choose shipping</option>
+          <option>choose shipping type</option>
           <option value='No'>No</option>
           <option value='Yes'>Yes</option>
         </select>
@@ -86,26 +85,27 @@ const ProductCreateForm = ({
           className='form-control'
           value={quantity}
           onChange={handleChange}
-          placeholder="Enter item's quantity"
+          placeholder="enter item's quantity"
         />
       </div>
 
       <div className='form-group'>
         <label>Color</label>
         <select name='color' className='form-control' onChange={handleChange}>
-          <option>Choose item's color</option>
-          {colors.map(color => (
-            <option key={color} value={color}>
-              {color}
-            </option>
-          ))}
+          <option>choose item's color</option>
+          {colors.length > 0 &&
+            colors.map(color => (
+              <option key={color._id} value={color.name}>
+                {color.name}
+              </option>
+            ))}
         </select>
       </div>
 
       <div className='form-group'>
         <label>Brand</label>
         <select name='brand' className='form-control' onChange={handleChange}>
-          <option>Choose item's brand</option>
+          <option>choose item's brand</option>
           {brands.map(brand => (
             <option key={brand} value={brand}>
               {brand}
@@ -121,7 +121,7 @@ const ProductCreateForm = ({
           onChange={handleCategoryChange}
           className='form-control'
         >
-          <option>Choose item's category</option>
+          <option>choose item's category</option>
           {categories.length > 0 &&
             categories.map(category => (
               <option key={category._id} value={category._id}>
@@ -139,7 +139,7 @@ const ProductCreateForm = ({
             style={{
               width: '100%',
             }}
-            placeholder="Choose item's subcategory"
+            placeholder="choose item's subcategory"
             value={subcategories}
             onChange={value => setValues({ ...values, subcategories: value })}
           >
@@ -152,7 +152,6 @@ const ProductCreateForm = ({
           </Select>
         </div>
       )}
-      <br />
 
       <button className='btn btn-outline-info'>Save</button>
     </form>
