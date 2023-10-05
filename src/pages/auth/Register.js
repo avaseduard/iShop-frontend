@@ -11,8 +11,6 @@ const Register = () => {
 
   // Redirect logged in users to home page
   useEffect(() => {
-  //!   if (user.currentUser && user.currentUser.token) navigate('/')
-  //! }, [user.currentUser])
   if (user && user.token) navigate('/')
   }, [user])
 
@@ -44,7 +42,8 @@ const Register = () => {
     <div className='container p-5'>
       <div className='row'>
         <div className='col-md-6 offset-md-3'>
-          <h4>register</h4>
+          <h4>Register</h4>
+          <br />
           <form onSubmit={handleSubmit}>
             <input
               type='email'
@@ -56,7 +55,7 @@ const Register = () => {
             />
             <br />
             <button type='submit' className='btn btn-primary'>
-              submit
+              Submit
             </button>
           </form>
         </div>

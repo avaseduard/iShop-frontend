@@ -37,7 +37,9 @@ const Cart = () => {
             </p>
           ) : (
             <>
-              <p>Shopping cart ({cartLength} items)</p>
+            <br />
+              <h4>Shopping cart ({cartLength} items)</h4>
+              <hr />
               <table className='table table-bordered'>
                 <thead className='thead-light'>
                   <tr>
@@ -60,19 +62,20 @@ const Cart = () => {
         </div>
         {/* Order summary */}
         <div className='col-md-4'>
+          <br />
           <h4>Order summary</h4>
           <hr />
           <p>Products</p>
           {cart.cart.map((product, index) => (
             <div key={index}>
               <p>
-                {product.title} x {product.count} = $
+                {product.title} x {product.count} = €
                 {product.price * product.count}
               </p>
             </div>
           ))}
           <hr />
-          TOTAL: <b>${cartTotal}</b>
+          TOTAL: <b>€{cartTotal}</b>
           <hr />
           {/* Buttons */}
           {user.user ? (
@@ -82,14 +85,15 @@ const Cart = () => {
                 disabled={!cartLength}
                 className='btn btn-primary btn-sm mt-2'
               >
-                Proceed to checkout
+                Proceed to card checkout
               </button>
+              <br />
               <button
                 onClick={() => saveOrderToDb(true)}
                 disabled={!cartLength}
                 className='btn btn-secondary btn-sm mt-2'
               >
-                Pay with cash delivery
+                Proceed to cash checkout
               </button>
             </>
           ) : (

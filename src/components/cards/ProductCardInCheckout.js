@@ -11,19 +11,6 @@ import {
 
 const ProductCardInCheckout = ({ product }) => {
   const dispatch = useDispatch()
-  const colors = ['Black', 'Brown', 'Silver', 'White', 'Blue']
-
-  // Update the color of the product from cart
-  const handleColorChange = e => {
-    let cart = []
-    if (localStorage.getItem('cart'))
-      cart = JSON.parse(localStorage.getItem('cart'))
-    cart.map((item, index) => {
-      if (item._id === product._id) cart[index].color = e.target.value
-    })
-    localStorage.setItem('cart', JSON.stringify(cart))
-    dispatch(setCart(cart))
-  }
 
   // Update the quantity of the product from cart
   const handleQuantityChange = e => {
@@ -79,26 +66,7 @@ const ProductCardInCheckout = ({ product }) => {
         <td scope='col'>{product.title}</td>
         <td scope='col'>{product.price}</td>
         <td scope='col'>{product.brand}</td>
-        <td scope='col'>
-          <select
-            onChange={handleColorChange}
-            name='color'
-            className='form-control'
-          >
-            {product.color ? (
-              <option value={product.color}>{product.color}</option>
-            ) : (
-              <option>Select</option>
-            )}
-            {colors
-              .filter(color => color !== product.color)
-              .map(color => (
-                <option key={color} value={color}>
-                  {color}
-                </option>
-              ))}
-          </select>
-        </td>
+        <td scope='col'>{product.color}</td>
         <td scope='col' className='text-center'>
           <input
             type='number'

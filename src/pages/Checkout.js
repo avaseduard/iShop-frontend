@@ -92,8 +92,9 @@ const Checkout = () => {
   return (
     <div className='row'>
       <div className='col-md-6'>
-        <h4>Delivery address</h4>
         <br />
+        <h4>Delivery address</h4>
+        {/* <br /> */}
         <ReactQuill theme='snow' value={address} onChange={setAddress} />
         <br />
         <button className='btn btn-primary mt-2' onClick={saveAddressToDb}>
@@ -101,7 +102,7 @@ const Checkout = () => {
         </button>
         <hr />
         <h4>Got coupon?</h4>
-        <br />
+        {/* <br /> */}
         <input
           onChange={e => {
             setCoupon(e.target.value.toLocaleUpperCase())
@@ -118,6 +119,7 @@ const Checkout = () => {
         {discountError && <p className='text-danger p-2'>{discountError}</p>}
       </div>
       <div className='col-md-6'>
+        <br />
         <h4>Order summary</h4>
         <hr />
         <p>{products.length} products in cart</p>
@@ -164,7 +166,7 @@ const Checkout = () => {
             <button
               disabled={!products.length}
               onClick={emptyCart}
-              className='btn btn-primary'
+              className='btn btn-danger'
             >
               Empty cart
             </button>

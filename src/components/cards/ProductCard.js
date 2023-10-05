@@ -43,7 +43,10 @@ const ProductCard = ({ product }) => {
       {product.ratings?.length > 0 ? (
         showAverageRating(product)
       ) : (
-        <div className='text-center pt-2 pb-3'>No rating yet</div>
+        <>
+          <div className='text-center pt-2 pb-3'>No rating yet</div>
+          <br />
+        </>
       )}
 
       <Card
@@ -69,7 +72,6 @@ const ProductCard = ({ product }) => {
           </Tooltip>,
         ]}
       >
-        
         <Meta
           title={`${title} - €${price}`}
           description={`${description?.substring(0, 40)}...`}
