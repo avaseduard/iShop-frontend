@@ -19,7 +19,7 @@ const HomeCarousel = () => {
 
   // Load all carousel images from db
   const loadImages = () =>
-    getAllImagesUrls(user.user.token)
+    getAllImagesUrls()
       .then(res => {
         setImages(res.data.map(image => image.images))
       })

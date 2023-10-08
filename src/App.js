@@ -53,6 +53,8 @@ const CarouselManager = lazy(() =>
 )
 const ColorsCreate = lazy(() => import('./pages/admin/colors/CreateColor'))
 const UpdateColor = lazy(() => import('./pages/admin/colors/UpdateColor'))
+const CreateAddress = lazy(() => import('./pages/user/addresses/CreateAddress'))
+const UpdateAddress = lazy(() => import('./pages/user/addresses/UpdateAddress'))
 
 const App = () => {
   const dispatch = useDispatch()
@@ -105,6 +107,8 @@ const App = () => {
           <Route path='user/history' element={<History />} />
           <Route path='user/password' element={<Password />} />
           <Route path='user/wishlist' element={<Wishlist />} />
+          <Route path='user/addresses' element={<CreateAddress />} />
+          <Route path='user/address/:slug' element={<UpdateAddress />} />
           <Route path='/checkout' element={<Checkout />} />
           <Route path='/payment' element={<Payment />} />
         </Route>

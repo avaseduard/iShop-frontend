@@ -9,12 +9,8 @@ export const sendImageUrl = async (imageUrl, authtoken) =>
   })
 
 // Get all images' urls from be
-export const getAllImagesUrls = async authtoken =>
-  await axios.get(`${process.env.REACT_APP_API}/carousel-images`, {
-    headers: {
-      authtoken: authtoken,
-    },
-  })
+export const getAllImagesUrls = async () =>
+  await axios.get(`${process.env.REACT_APP_API}/carousel-images`)
 
 // Get all images' urls from be
 export const removeCarouselImage = async (imageId, authtoken) =>
