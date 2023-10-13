@@ -13,10 +13,7 @@ Made using:
 To do:
 - categories: Laptops, tablets and phones + TVs and cameras
 - subcategories: Laptops, Tablets, Phones + TVs, Photo cameras, Video cameras
-- client address in dashboard and database
-- select delivery address in checkout
 - convert all js to jsx
-- remove address function from user controller and routes
 
 Helpers:
 - € symbol

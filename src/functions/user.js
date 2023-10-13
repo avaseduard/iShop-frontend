@@ -65,10 +65,10 @@ export const createOrder = async (stripeResponse, authtoken) =>
   )
 
 // Send info from fe to create cash order in db
-export const createCashOrderBackend = async (authtoken, coupon) =>
+export const createCashOrderBackend = async (authtoken, coupon, address) =>
   await axios.post(
     `${process.env.REACT_APP_API}/user/cash-order`,
-    { couponApplied: coupon },
+    { couponApplied: coupon, address: address },
     {
       headers: {
         authtoken: authtoken,

@@ -34,7 +34,6 @@ const CreateAddress = () => {
       .then(res => {
         setLoading(false)
         setAddresses(res.data[0].addresses)
-        // console.log(res.data[0].addresses)
       })
       .catch(error => {
         setLoading(false)

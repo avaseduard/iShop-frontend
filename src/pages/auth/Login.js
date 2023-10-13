@@ -107,7 +107,7 @@ const Login = () => {
     <div className='container p-5'>
       <div className='row'>
         <div className='col-md-6 offset-md-3'>
-          {loading ? <h4>loading...</h4> : <h4>login</h4>}
+          {loading ? <h4>Loading...</h4> : <h4>Login</h4>}
           <form onSubmit={handleSubmit}>
             <input
               type='email'
@@ -118,12 +118,11 @@ const Login = () => {
               autoFocus
             />
             <input
-              type='pasword'
-              placeholder='enter your password...'
+              type='password'
+              placeholder='enter password...'
               className='form-control'
               value={password}
               onChange={e => setPassword(e.target.value)}
-              // autoFocus
             />
             <br />
             <Button
@@ -132,11 +131,11 @@ const Login = () => {
               className='mb-3'
               block
               shape='round'
-              icon={<MailOutlined />}
+              icon={<MailOutlined className='align-top pt-1' />}
               size='large'
               disabled={!email || password.length < 6}
             >
-              login with email & password
+              Login with email & password
             </Button>
             <Button
               onClick={googleLogin}
@@ -145,13 +144,13 @@ const Login = () => {
               className='mb-3'
               block
               shape='round'
-              icon={<GoogleOutlined />}
+              icon={<GoogleOutlined className='align-top pt-1' />}
               size='large'
             >
-              login with google
+              Login with Google
             </Button>
             <Link to='/forgot-password' className='text-danger'>
-              forgot password?
+              Forgot password?
             </Link>
           </form>
         </div>

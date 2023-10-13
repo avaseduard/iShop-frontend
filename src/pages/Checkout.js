@@ -14,12 +14,16 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { setCouponRedux } from '../store/reducers/coupon.reducer'
 import { setCashOnDelivery } from '../store/reducers/cod.reducer'
+import { listAllAddresses } from '../functions/address'
+import { Input, Radio, Space } from 'antd'
 
 const Checkout = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const [products, setProducts] = useState([])
   const [total, setTotal] = useState(0)
+  const [addresses, setAddresses] = useState([])
   const [address, setAddress] = useState('')
   const [savedAddress, setSavedAddress] = useState(false)
   const [coupon, setCoupon] = useState('')
@@ -27,14 +31,30 @@ const Checkout = () => {
   const [discountError, setDiscountError] = useState('')
   const { user, cashOnDelivery } = useSelector(state => ({ ...state }))
 
-  useEffect(() => {
+  useEffect(() => (loadUserCart(), loadAddresses()), [])
+
+  const loadUserCart = () =>
     getUserCart(user.user.token).then(res => {
-      console.log(res.data.products)
+      // console.log(res.data.products)
       setProducts(res.data.products)
-      console.log(products)
+      // console.log(products)
       setTotal(res.data.cartTotal)
     })
-  }, [])
+
+  const loadAddresses = () => {
+    setLoading(true)
+    listAllAddresses(user.user.token)
+      .then(res => {
+        setLoading(false)
+        setAddresses(res.data[0].addresses)
+      })
+      .catch(error => {
+        setLoading(false)
+        console.log('GET ADDRESSES FAILED IN FE -->', error)
+      })
+  }
+
+  const onChange = e => setAddress(e.target.value)
 
   const saveAddressToDb = () => {
     saveUserAddress(user.user.token, address).then(res => {
@@ -72,8 +92,8 @@ const Checkout = () => {
   }
 
   const createCashOrder = () => {
-    createCashOrderBackend(user.user.token, coupon).then(res => {
-      console.log('CREATED CASH ORDER -->', res)
+    createCashOrderBackend(user.user.token, coupon, address).then(res => {
+      // console.log('CREATED CASH ORDER -->', res)
       // Empty cart in local storage
       localStorage.removeItem('cart')
       // Empty cart in redux
@@ -93,16 +113,29 @@ const Checkout = () => {
     <div className='row'>
       <div className='col-md-6'>
         <br />
+
         <h4>Delivery address</h4>
-        {/* <br /> */}
-        <ReactQuill theme='snow' value={address} onChange={setAddress} />
+        <hr />
+        <Radio.Group onChange={onChange}>
+          <Space direction='vertical'>
+            {addresses.map(addressOption => (
+              <Radio
+                key={addressOption._id}
+                value={addressOption.location}
+                className='h6'
+              >
+                {addressOption.location}
+              </Radio>
+            ))}
+          </Space>
+        </Radio.Group>
         <br />
         <button className='btn btn-primary mt-2' onClick={saveAddressToDb}>
-          Save
+          Select
         </button>
         <hr />
+
         <h4>Got coupon?</h4>
-        {/* <br /> */}
         <input
           onChange={e => {
             setCoupon(e.target.value.toLocaleUpperCase())
@@ -120,6 +153,7 @@ const Checkout = () => {
       </div>
       <div className='col-md-6'>
         <br />
+
         <h4>Order summary</h4>
         <hr />
         <p>{products.length} products in cart</p>
@@ -134,7 +168,6 @@ const Checkout = () => {
         ))}
         <hr />
         <p>Cart total: ${total}</p>
-
         {totalAfterDiscount > 0 && (
           <p className='text-success'>
             Cart total after discount: ${totalAfterDiscount}
@@ -143,7 +176,7 @@ const Checkout = () => {
 
         <div className='row'>
           <div className='col-md-6'>
-            {cashOnDelivery ? (
+            {cashOnDelivery.cashOnDelivery ? (
               <button
                 disabled={!savedAddress || !products.length}
                 className='btn btn-primary'
