@@ -15,6 +15,7 @@ import {
 import FileUpload from '../../../components/forms/FileUpload'
 import { LoadingOutlined } from '@ant-design/icons'
 import ProductUpdateForm from '../../../components/forms/ProductUpdateForm'
+import { listAllColors } from '../../../functions/color'
 
 // Initial keys and values of product state
 const intitialState = {
@@ -26,7 +27,6 @@ const intitialState = {
   shipping: '',
   quantity: '',
   images: [],
-  colors: ['Black', 'Brown', 'Silver', 'White', 'Blue'],
   color: '',
   brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS'],
   brand: '',
@@ -36,6 +36,7 @@ const ProductUpdate = () => {
   const { slug } = useParams()
   const [values, setValues] = useState(intitialState)
   const [subcategoryOptions, setSubcategoryOptions] = useState([])
+  const [colors, setColors] = useState([])
   const [categories, setCategories] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('')
   const [arrayOfSubcategoriesIds, setArrayOfSubcategoriesIds] = useState([])
@@ -47,6 +48,7 @@ const ProductUpdate = () => {
   useEffect(() => {
     loadProduct()
     loadCategories()
+    loadColors()
   }, [])
 
   // Get the product from backend and set it to state
@@ -70,6 +72,20 @@ const ProductUpdate = () => {
   // Get the categories from backend and set them in their own state
   const loadCategories = () =>
     getCategories().then(categories => setCategories(categories.data))
+
+  // Get the available colors from backend and set them in state
+  const loadColors = () => {
+    setLoading(true)
+    listAllColors()
+      .then(res => {
+        setLoading(false)
+        setColors(res.data)
+      })
+      .catch(error => {
+        setLoading(false)
+        console.log('LIST ALL COLORS FAILED IN FE -->', error)
+      })
+  }
 
   // Dinamically take each key and value that the admin selects and set it to product state
   const handleChange = e => {
@@ -144,6 +160,7 @@ const ProductUpdate = () => {
             setValues={setValues}
             handleCategoryChange={handleCategoryChange}
             categories={categories}
+            colors={colors}
             subcategoryOptions={subcategoryOptions}
             setArrayOfSubcategoriesIds={setArrayOfSubcategoriesIds}
             arrayOfSubcategoriesIds={arrayOfSubcategoriesIds}

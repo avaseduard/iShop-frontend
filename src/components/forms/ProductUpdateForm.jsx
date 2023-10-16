@@ -8,6 +8,7 @@ const ProductUpdateForm = ({
   setValues,
   handleCategoryChange,
   categories,
+  colors,
   subcategoryOptions,
   arrayOfSubcategoriesIds,
   setArrayOfSubcategoriesIds,
@@ -22,7 +23,6 @@ const ProductUpdateForm = ({
     shipping,
     quantity,
     images,
-    colors,
     brands,
     color,
     brand,
@@ -95,11 +95,12 @@ const ProductUpdateForm = ({
           className='form-control'
           onChange={handleChange}
         >
-          {colors.map(color => (
-            <option key={color} value={color}>
-              {color}
-            </option>
-          ))}
+          {colors.length > 0 &&
+            colors.map(color => (
+              <option key={color._id} value={color.name}>
+                {color.name}
+              </option>
+            ))}
         </select>
       </div>
 

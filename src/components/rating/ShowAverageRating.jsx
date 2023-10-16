@@ -1,6 +1,6 @@
 import StarRatings from 'react-star-ratings'
 
-export const showAverageRating = product => {
+const ShowAverageRating = product => {
   const rating = product?.ratings?.length
     ? product.ratings.reduce((result, rating) => result + rating.star, 0) /
       product.ratings.length
@@ -24,3 +24,5 @@ export const showAverageRating = product => {
     </div>
   )
 }
+
+export default ShowAverageRating

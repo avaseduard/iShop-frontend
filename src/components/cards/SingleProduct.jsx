@@ -7,7 +7,6 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import ProductListItems from './ProductListItems'
 import StarRatings from 'react-star-ratings'
 import RatingModal from '../modal/RatingModal'
-import { showAverageRating } from '../../functions/rating'
 import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { setCart } from '../../store/reducers/cart.reducer'
@@ -15,6 +14,7 @@ import _ from 'lodash'
 import { setDrawerVisibility } from '../../store/reducers/drawer.reducer'
 import { addToWishlist } from '../../functions/user'
 import { toast } from 'react-toastify'
+import showAverageRating from '../rating/ShowAverageRating'
 
 const { Meta } = Card
 

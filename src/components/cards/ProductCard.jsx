@@ -5,10 +5,10 @@ import { EyeOutlined, ShoppingCartOutlined } from '@ant-design/icons'
 import { Tooltip } from 'antd'
 import { Link } from 'react-router-dom'
 import pictureunavailable from '../../../src/images/picture_unavailable.jpg'
-import { showAverageRating } from '../../functions/rating'
 import _ from 'lodash'
 import { setCart } from '../../store/reducers/cart.reducer'
 import { setDrawerVisibility } from '../../store/reducers/drawer.reducer'
+import showAverageRating from '../rating/ShowAverageRating'
 
 const { Meta } = Card
 

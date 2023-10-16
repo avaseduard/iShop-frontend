@@ -11,9 +11,9 @@ Made using:
 - Axios
 
 To do:
-- categories: Laptops, tablets and phones + TVs and cameras
-- subcategories: Laptops, Tablets, Phones + TVs, Photo cameras, Video cameras
-- convert all js to jsx
+- categories and subs: 
+  - Portables: Laptops, Tablets, Phones
+  - Wearables: Watches, Earphones
 
 Helpers:
 - € symbol
