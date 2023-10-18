@@ -9,10 +9,11 @@ const ProductUpdateForm = ({
   handleCategoryChange,
   categories,
   colors,
+  brands,
   subcategoryOptions,
   arrayOfSubcategoriesIds,
   setArrayOfSubcategoriesIds,
-  selectedCategory
+  selectedCategory,
 }) => {
   const {
     title,
@@ -23,7 +24,7 @@ const ProductUpdateForm = ({
     shipping,
     quantity,
     images,
-    brands,
+    // brands,
     color,
     brand,
   } = values
@@ -112,11 +113,12 @@ const ProductUpdateForm = ({
           className='form-control'
           onChange={handleChange}
         >
-          {brands.map(brand => (
-            <option key={brand} value={brand}>
-              {brand}
-            </option>
-          ))}
+          {brands.length > 0 &&
+            brands.map(brand => (
+              <option key={brand._id} value={brand.name}>
+                {brand.name}
+              </option>
+            ))}
         </select>
       </div>
 
@@ -157,7 +159,7 @@ const ProductUpdateForm = ({
         </Select>
       </div>
       <br />
-      
+
       <button className='btn btn-outline-info'>Save</button>
     </form>
   )

@@ -16,6 +16,7 @@ import FileUpload from '../../../components/forms/FileUpload'
 import { LoadingOutlined } from '@ant-design/icons'
 import ProductUpdateForm from '../../../components/forms/ProductUpdateForm'
 import { listAllColors } from '../../../functions/color'
+import { listAllBrands } from '../../../functions/brand'
 
 // Initial keys and values of product state
 const intitialState = {
@@ -28,7 +29,6 @@ const intitialState = {
   quantity: '',
   images: [],
   color: '',
-  brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS'],
   brand: '',
 }
 
@@ -37,6 +37,7 @@ const ProductUpdate = () => {
   const [values, setValues] = useState(intitialState)
   const [subcategoryOptions, setSubcategoryOptions] = useState([])
   const [colors, setColors] = useState([])
+  const [brands, setBrands] = useState([])
   const [categories, setCategories] = useState([])
   const [selectedCategory, setSelectedCategory] = useState('')
   const [arrayOfSubcategoriesIds, setArrayOfSubcategoriesIds] = useState([])
@@ -49,6 +50,7 @@ const ProductUpdate = () => {
     loadProduct()
     loadCategories()
     loadColors()
+    loadBrands()
   }, [])
 
   // Get the product from backend and set it to state
@@ -84,6 +86,20 @@ const ProductUpdate = () => {
       .catch(error => {
         setLoading(false)
         console.log('LIST ALL COLORS FAILED IN FE -->', error)
+      })
+  }
+
+  // Get the available colors from backend and set them in state
+  const loadBrands = () => {
+    setLoading(true)
+    listAllBrands()
+      .then(res => {
+        setLoading(false)
+        setBrands(res.data)
+      })
+      .catch(error => {
+        setLoading(false)
+        console.log('LIST ALL BRANDS FAILED IN FE -->', error)
       })
   }
 
@@ -161,6 +177,7 @@ const ProductUpdate = () => {
             handleCategoryChange={handleCategoryChange}
             categories={categories}
             colors={colors}
+            brands={brands}
             subcategoryOptions={subcategoryOptions}
             setArrayOfSubcategoriesIds={setArrayOfSubcategoriesIds}
             arrayOfSubcategoriesIds={arrayOfSubcategoriesIds}

@@ -12,6 +12,7 @@ import {
 import FileUpload from '../../../components/forms/FileUpload'
 import { LoadingOutlined } from '@ant-design/icons'
 import { listAllColors } from '../../../functions/color'
+import { listAllBrands } from '../../../functions/brand'
 
 // Initial keys and values of product state
 const intitialState = {
@@ -26,7 +27,7 @@ const intitialState = {
   images: [],
   colors: [],
   color: '',
-  brands: ['Apple', 'Samsung', 'Microsoft', 'Lenovo', 'ASUS'],
+  brands: [],
   brand: '',
 }
 
@@ -41,6 +42,7 @@ const ProductCreate = () => {
   // When page loads, populate categories for dropdown
   useEffect(() => {
     loadColors()
+    loadBrands()
     loadCategories()
   }, [])
 
@@ -58,6 +60,23 @@ const ProductCreate = () => {
       .catch(error => {
         setLoading(false)
         console.log('LIST ALL COLORS FAILED IN FE -->', error)
+      })
+  }
+
+  // Get the available colors from backend and set them in state
+  const loadBrands = () => {
+    setLoading(true)
+    listAllBrands()
+      .then(res => {
+        setLoading(false)
+        setValues(values => ({
+          ...values,
+          brands: res.data,
+        }))
+      })
+      .catch(error => {
+        setLoading(false)
+        console.log('LIST ALL BRANDS FAILED IN FE -->', error)
       })
   }
 

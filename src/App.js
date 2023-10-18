@@ -55,6 +55,8 @@ const ColorsCreate = lazy(() => import('./pages/admin/colors/CreateColor'))
 const UpdateColor = lazy(() => import('./pages/admin/colors/UpdateColor'))
 const CreateAddress = lazy(() => import('./pages/user/addresses/CreateAddress'))
 const UpdateAddress = lazy(() => import('./pages/user/addresses/UpdateAddress'))
+const CreateBrand = lazy(() => import('./pages/admin/brands/CreateBrand'))
+const UpdateBrand = lazy(() => import('./pages/admin/brands/UpdateBrand'))
 
 const App = () => {
   const dispatch = useDispatch()
@@ -123,6 +125,8 @@ const App = () => {
           />
           <Route path='/admin/colors' element={<ColorsCreate />} />
           <Route path='/admin/color/:slug' element={<UpdateColor />} />
+          <Route path='/admin/brands' element={<CreateBrand />} />
+          <Route path='/admin/brand/:slug' element={<UpdateBrand />} />
           <Route path='/admin/product' element={<ProductCreate />} />
           <Route path='/admin/product/:slug' element={<ProductUpdate />} />
           <Route path='/admin/products' element={<AllProducts />} />

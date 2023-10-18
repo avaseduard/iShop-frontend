@@ -106,11 +106,12 @@ const ProductCreateForm = ({
         <label>Brand</label>
         <select name='brand' className='form-control' onChange={handleChange}>
           <option>choose item's brand</option>
-          {brands.map(brand => (
-            <option key={brand} value={brand}>
-              {brand}
-            </option>
-          ))}
+          {brands.length > 0 &&
+            brands.map(brand => (
+              <option key={brand._id} value={brand.name}>
+                {brand.name}
+              </option>
+            ))}
         </select>
       </div>
 
