@@ -11,9 +11,8 @@ Made using:
 - Axios
 
 To do:
-- categories and subs: 
-  - Portables: Laptops, Tablets, Phones
-  - Wearables: Watches, Earphones
+- product price field in product card
+- reset all filters
 
 Helpers:
 - € symbol

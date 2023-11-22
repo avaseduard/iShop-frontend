@@ -19,10 +19,10 @@ import showAverageRating from '../rating/ShowAverageRating'
 const { Meta } = Card
 
 const SingleProduct = ({ product, onStarClick, star }) => {
-  const { title, images, description, _id } = product
   const dispatch = useDispatch()
-  const { user } = useSelector(state => ({ ...state }))
   const [tooltip, setTooltip] = useState('Buy')
+  const { title, images, description, _id } = product
+  const { user } = useSelector(state => ({ ...state }))
 
   // Add to cart functionality
   const handleAddToCart = () => {
@@ -46,10 +46,9 @@ const SingleProduct = ({ product, onStarClick, star }) => {
 
   const handleAddToWishlist = e => {
     e.preventDefault()
-    addToWishlist(product._id, user.user.token).then(res => {
-      // console.log(product)
+    addToWishlist(product._id, user.user.token).then(res =>
       toast.success(`'${product.title}' added to wishlist`)
-    })
+    )
   }
 
   return (
@@ -61,7 +60,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
             showArrows={false}
             showStatus={false}
             autoPlay
-            infiniteLoop
+            infiniteLoop={true}
           >
             {images.map(image => (
               <img src={image.url} key={image.public_id} />

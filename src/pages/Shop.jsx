@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setSearch } from '../store/reducers/search.reducer'
+import { listAllColors } from '../functions/color'
+import { listAllBrands } from '../functions/brand'
 import { fetchProductsbyFilter, getProductsByCount } from '../functions/product'
 import { getCategories } from '../functions/category'
 import { getSubcategories } from '../functions/subcategory'
 import ProductCard from '../components/cards/ProductCard'
-import { useDispatch, useSelector } from 'react-redux'
+import FilterStar from '../components/forms/FilterStar'
 import { Checkbox, Menu, Radio, Slider } from 'antd'
-import SubMenu from 'antd/es/menu/SubMenu'
 import {
   ApartmentOutlined,
   AppstoreOutlined,
   BgColorsOutlined,
   DollarOutlined,
-  DownSquareOutlined,
   DropboxOutlined,
   SketchOutlined,
   StarOutlined,
 } from '@ant-design/icons'
-import { setSearch } from '../store/reducers/search.reducer'
-import Star from '../components/forms/Star'
 
 const Shop = () => {
   const dispatch = useDispatch()
@@ -28,39 +28,31 @@ const Shop = () => {
   const [categories, setCategories] = useState([])
   const [categoryIds, setCategoryIds] = useState([])
   const [price, setPrice] = useState([0, 9999])
-  const [star, setStar] = useState('')
+  const [star, setStar] = useState(null)
   const [subcategories, setSubcategories] = useState([])
   const [subcategory, setSubcategory] = useState('')
-  const [brands, setBrands] = useState([
-    'Apple',
-    'Samsung',
-    'Microsoft',
-    'Lenovo',
-    'ASUS',
-  ])
+  const [brands, setBrands] = useState([])
   const [selectedBrand, setSelectedBrand] = useState('')
-  const [colors, setColors] = useState([
-    'Black',
-    'Brown',
-    'Silver',
-    'White',
-    'Blue',
-  ])
+  const [colors, setColors] = useState([])
   const [selectedColor, setSelectedColor] = useState('')
   const [shipping, setShipping] = useState('')
 
+  // Filter method adapted to each filter/ query
   const fetchProducts = argument => {
+    setLoading(true)
     fetchProductsbyFilter(argument).then(res => {
       setProducts(res.data)
       setLoading(false)
     })
   }
 
-  // Load products and categories by default when page loads
+  // Load products and filter values when page loads
   useEffect(() => {
     loadAllProducts()
     loadCategories()
     loadSubcategories()
+    loadColors()
+    loadBrands()
   }, [])
   //
   const loadAllProducts = () => {
@@ -86,10 +78,25 @@ const Shop = () => {
       setLoading(false)
     })
   }
-
-  // Load products based on user search input
-  useEffect(() => {
+  //
+  const loadColors = () => {
     setLoading(true)
+    listAllColors().then(res => {
+      setLoading(false)
+      setColors(res.data)
+    })
+  }
+  //
+  const loadBrands = () => {
+    setLoading(true)
+    listAllBrands().then(res => {
+      setLoading(false)
+      setBrands(res.data)
+    })
+  }
+
+  // Load products based on user search input with a delay of 300 ms
+  useEffect(() => {
     const delayed = setTimeout(() => {
       fetchProducts({ query: text })
     }, 300)
@@ -107,7 +114,7 @@ const Shop = () => {
   //
   const handleSlider = value => {
     dispatch(setSearch(''))
-    setCategoryIds([])
+    // setCategoryIds([])
     setPrice(value)
   }
 
@@ -117,28 +124,34 @@ const Shop = () => {
     const inTheState = [...categoryIds]
     const justChecked = e.target.value
     const foundInTheState = inTheState.indexOf(justChecked) // index or -1
-    // If the category id is not found in the state, add it, if it's found, remove it
-    if (foundInTheState === -1) {
-      inTheState.push(justChecked)
-    } else {
-      inTheState.splice(foundInTheState, 1)
-    }
+    // If the category id isn't found in the state, add it, if it's found, remove it
+    foundInTheState === -1
+      ? inTheState.push(justChecked)
+      : inTheState.splice(foundInTheState, 1)
+    // Set category ids to state, for checkbox functionality
     setCategoryIds(inTheState)
-    fetchProducts({ category: inTheState })
+    // When the user deselects all checkboxes, reset filter
+    !inTheState.length
+      ? loadAllProducts()
+      : fetchProducts({ category: inTheState })
   }
 
   // Load products based on rating
-  const handleStarClick = number => {
+  const handleStar = (event, newValue) => {
     dispatch(setSearch(''))
-    setStar(number)
-    fetchProducts({ stars: number })
+    setStar(newValue)
+    // If user clicks on star, filter and if he clicks again, reset filter
+    !newValue ? loadAllProducts() : fetchProducts({ stars: newValue })
   }
 
   // Load products based on subcategory
-  const handleSubcategory = subcategory => {
+  const handleSubcategory = subcat => {
     dispatch(setSearch(''))
-    setSubcategory(subcategory)
-    fetchProducts({ subcategory: subcategory })
+    setSubcategory(subcat)
+    // If user clicks on subcategory, filter and if he clicks again, reset filter
+    subcategory === subcat
+      ? loadAllProducts()
+      : fetchProducts({ subcategory: subcat })
   }
 
   // Load products based on brand
@@ -146,6 +159,8 @@ const Shop = () => {
     dispatch(setSearch(''))
     setSelectedBrand(e.target.value)
     fetchProducts({ brand: e.target.value })
+    console.log(e.target.value)
+    // console.log(selectedBrand)
   }
 
   // Load products based on color
@@ -158,8 +173,10 @@ const Shop = () => {
   // Load products based on shipping
   const handleShipping = e => {
     dispatch(setSearch(''))
-    setShipping(e.target.value)
-    fetchProducts({ shipping: e.target.value })
+    // If checkbox is checked, fetched products based on value, else do not filter
+    e.target.checked
+      ? fetchProducts({ shipping: e.target.value })
+      : loadAllProducts()
   }
 
   const menuItems = [
@@ -177,9 +194,7 @@ const Shop = () => {
               range
               value={price}
               onChange={handleSlider}
-              // defaultValue={[0, 9999]}
               max='9999'
-              // className='ml-1 mr-1'
             />
           ),
         },
@@ -193,23 +208,7 @@ const Shop = () => {
       children: [
         {
           type: 'group',
-          label: <Star starClick={handleStarClick} numberOfStars={5} />,
-        },
-        {
-          type: 'group',
-          label: <Star starClick={handleStarClick} numberOfStars={4} />,
-        },
-        {
-          type: 'group',
-          label: <Star starClick={handleStarClick} numberOfStars={3} />,
-        },
-        {
-          type: 'group',
-          label: <Star starClick={handleStarClick} numberOfStars={2} />,
-        },
-        {
-          type: 'group',
-          label: <Star starClick={handleStarClick} numberOfStars={1} />,
+          label: <FilterStar star={star} handleStar={handleStar} />,
         },
       ],
     },
@@ -227,7 +226,7 @@ const Shop = () => {
                 value={category._id}
                 name='category'
                 onChange={handleCheck}
-                checked={categoryIds.includes(category._id)}
+                // checked={categoryIds.includes(category._id)}
               >
                 {category.name}
               </Checkbox>
@@ -267,14 +266,13 @@ const Shop = () => {
           type: 'group',
           label: brands.map(brand => (
             <Radio
-              key={brand}
-              value={brand}
-              name={brand}
-              checked={brand === selectedBrand}
+              key={brand._id}
+              value={brand.name}
+              name={brand.name}
+              checked={brand.name === selectedBrand}
               onChange={handleBrand}
-              // className='pb-1 pl-1 pr-4'
             >
-              {brand}
+              {brand.name}
             </Radio>
           )),
         },
@@ -289,15 +287,14 @@ const Shop = () => {
         {
           type: 'group',
           label: colors.map(color => (
-            <div key={color}>
+            <div key={color._id}>
               <Radio
-                value={color}
-                name={color}
-                checked={color === selectedColor}
+                value={color.name}
+                name={color.name}
+                checked={color.name === selectedColor}
                 onChange={handleColor}
-                // className='pb-1 pl-1 pr-4'
               >
-                {color}
+                {color.name}
               </Radio>
             </div>
           )),
@@ -316,17 +313,13 @@ const Shop = () => {
             <div>
               <Checkbox
                 value='Yes'
-                checked={shipping === 'Yes'}
                 onChange={handleShipping}
-                // className='pb-1 pl-1 pr-4'
               >
                 Yes
               </Checkbox>
               <Checkbox
                 value='No'
-                checked={shipping === 'No'}
                 onChange={handleShipping}
-                // className='pb-1 pl-1 pr-4'
               >
                 No
               </Checkbox>

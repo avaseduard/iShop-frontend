@@ -8,7 +8,7 @@ const Star = ({ starClick, numberOfStars }) => (
     // starRatedColor='blue'
     starHoverColor='blue'
     starEmptyColor='blue'
-    // isSelectable={true}
+    isSelectable={true}
   />
 )
 

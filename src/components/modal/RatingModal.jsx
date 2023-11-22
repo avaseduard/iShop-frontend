@@ -6,9 +6,9 @@ import { toast } from 'react-toastify'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const RatingModal = ({ children }) => {
-  const { user } = useSelector(state => ({ ...state }))
   const navigate = useNavigate()
   const { slug } = useParams()
+  const { user } = useSelector(state => ({ ...state }))
   const [modalVisible, setModalVisible] = useState(false)
 
   const handleModal = () => {

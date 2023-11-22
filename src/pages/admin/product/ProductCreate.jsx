@@ -44,6 +44,7 @@ const ProductCreate = () => {
     loadColors()
     loadBrands()
     loadCategories()
+    setValues(intitialState)
   }, [])
 
   // Get the available colors from backend and set them in state
@@ -63,7 +64,7 @@ const ProductCreate = () => {
       })
   }
 
-  // Get the available colors from backend and set them in state
+  // Get the available brands from backend and set them in state
   const loadBrands = () => {
     setLoading(true)
     listAllBrands()

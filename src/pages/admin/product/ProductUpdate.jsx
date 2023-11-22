@@ -2,11 +2,7 @@ import AdminNav from '../../../components/nav/AdminNav'
 import { toast } from 'react-toastify'
 import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import {
-  createProduct,
-  getProductBySlug,
-  updateProduct,
-} from '../../../functions/product'
+import { getProductBySlug, updateProduct } from '../../../functions/product'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
   getCategories,
