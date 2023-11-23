@@ -8,11 +8,12 @@ import { getCategories } from '../functions/category'
 import { getSubcategories } from '../functions/subcategory'
 import ProductCard from '../components/cards/ProductCard'
 import FilterStar from '../components/forms/FilterStar'
-import { Checkbox, Menu, Radio, Slider } from 'antd'
+import { Checkbox, Menu, Radio, Slider, Button } from 'antd'
 import {
   ApartmentOutlined,
   AppstoreOutlined,
   BgColorsOutlined,
+  CloseSquareOutlined,
   DollarOutlined,
   DropboxOutlined,
   SketchOutlined,
@@ -114,8 +115,15 @@ const Shop = () => {
   //
   const handleSlider = value => {
     dispatch(setSearch(''))
-    // setCategoryIds([])
     setPrice(value)
+  }
+
+  // Load products based on rating
+  const handleStar = (event, newValue) => {
+    dispatch(setSearch(''))
+    setStar(newValue)
+    // If user clicks on star, filter and if he clicks again, reset filter
+    !newValue ? loadAllProducts() : fetchProducts({ stars: newValue })
   }
 
   // Load categories based on checkbox filter
@@ -136,14 +144,6 @@ const Shop = () => {
       : fetchProducts({ category: inTheState })
   }
 
-  // Load products based on rating
-  const handleStar = (event, newValue) => {
-    dispatch(setSearch(''))
-    setStar(newValue)
-    // If user clicks on star, filter and if he clicks again, reset filter
-    !newValue ? loadAllProducts() : fetchProducts({ stars: newValue })
-  }
-
   // Load products based on subcategory
   const handleSubcategory = subcat => {
     dispatch(setSearch(''))
@@ -159,8 +159,6 @@ const Shop = () => {
     dispatch(setSearch(''))
     setSelectedBrand(e.target.value)
     fetchProducts({ brand: e.target.value })
-    console.log(e.target.value)
-    // console.log(selectedBrand)
   }
 
   // Load products based on color
@@ -173,16 +171,41 @@ const Shop = () => {
   // Load products based on shipping
   const handleShipping = e => {
     dispatch(setSearch(''))
+    setShipping(e.target.value)
     // If checkbox is checked, fetched products based on value, else do not filter
     e.target.checked
       ? fetchProducts({ shipping: e.target.value })
       : loadAllProducts()
   }
 
+  // Reset all filters
+  const resetAllFilters = () => {
+    dispatch(setSearch(''))
+    setPrice([0, 9999])
+    setCategoryIds([])
+    setStar(null)
+    setSubcategory('')
+    setSelectedBrand('')
+    setSelectedColor('')
+    setShipping('')
+  }
+
+  // Ant Design filter menu items
   const menuItems = [
+    // Reset filters button
+    {
+      label: 'Reset all filters',
+      key: '0',
+      icon: <CloseSquareOutlined />,
+      children: [
+        {
+          type: 'group',
+          label: <Button onClick={resetAllFilters}>Reset filters</Button>,
+        },
+      ],
+    },
     // Price filter
     {
-      // label: 'Price $',
       label: 'Price $',
       key: '1',
       icon: <DollarOutlined />,
@@ -190,12 +213,7 @@ const Shop = () => {
         {
           type: 'group',
           label: (
-            <Slider
-              range
-              value={price}
-              onChange={handleSlider}
-              max='9999'
-            />
+            <Slider range value={price} onChange={handleSlider} max='9999' />
           ),
         },
       ],
@@ -226,7 +244,7 @@ const Shop = () => {
                 value={category._id}
                 name='category'
                 onChange={handleCheck}
-                // checked={categoryIds.includes(category._id)}
+                checked={categoryIds.includes(category._id)}
               >
                 {category.name}
               </Checkbox>
@@ -311,16 +329,10 @@ const Shop = () => {
           type: 'group',
           label: (
             <div>
-              <Checkbox
-                value='Yes'
-                onChange={handleShipping}
-              >
+              <Checkbox value='Yes' onChange={handleShipping}>
                 Yes
               </Checkbox>
-              <Checkbox
-                value='No'
-                onChange={handleShipping}
-              >
+              <Checkbox value='No' onChange={handleShipping}>
                 No
               </Checkbox>
             </div>
@@ -340,7 +352,7 @@ const Shop = () => {
           <Menu
             items={menuItems}
             mode='inline'
-            defaultOpenKeys={['1', '2', '3', '4', '5', '6', '7']}
+            defaultOpenKeys={['0', '1', '2', '3', '4', '5', '6', '7']}
           />
         </div>
 
