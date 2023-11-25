@@ -110,7 +110,7 @@ const Checkout = () => {
   }
 
   return (
-    <div className='row'>
+    <div className='row px-3'>
       <div className='col-md-6'>
         <br />
 

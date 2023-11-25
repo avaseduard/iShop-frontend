@@ -11,8 +11,9 @@ Made using:
 - Axios
 
 To do:
-- product price field in product card
-- reset all filters
+- reset filters
+- style the slider
+- modify coupons name with %
 
 Helpers:
 - € symbol

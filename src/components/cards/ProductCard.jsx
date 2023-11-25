@@ -43,13 +43,11 @@ const ProductCard = ({ product }) => {
       {product.ratings?.length > 0 ? (
         showAverageRating(product)
       ) : (
-        <>
-          <div className='text-center pt-2 pb-3'>No rating yet</div>
-          <br />
-        </>
+        <div className='text-center pt-2 pb-3'>No rating yet</div>
       )}
 
       <Card
+        loading={!product}
         cover={
           <img
             src={!images[0]?.url ? pictureunavailable : images[0]?.url}
@@ -77,10 +75,10 @@ const ProductCard = ({ product }) => {
             <>
               {title}
               <br />
-              Price: € {price}
+              Price: €{price}
             </>
           }
-          description={`${description?.substring(0, 40)}...`}
+          description={`${description?.substring(0, 60)}...`}
         />
       </Card>
     </>

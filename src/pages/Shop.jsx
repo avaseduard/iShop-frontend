@@ -8,7 +8,7 @@ import { getCategories } from '../functions/category'
 import { getSubcategories } from '../functions/subcategory'
 import ProductCard from '../components/cards/ProductCard'
 import FilterStar from '../components/forms/FilterStar'
-import { Checkbox, Menu, Radio, Slider, Button } from 'antd'
+import { Checkbox, Menu, Radio, Button } from 'antd'
 import {
   ApartmentOutlined,
   AppstoreOutlined,
@@ -19,6 +19,7 @@ import {
   SketchOutlined,
   StarOutlined,
 } from '@ant-design/icons'
+import { Slider } from '@mui/material'
 
 const Shop = () => {
   const dispatch = useDispatch()
@@ -113,14 +114,12 @@ const Shop = () => {
     return () => clearTimeout(delayed)
   }, [price])
   //
-  const handleSlider = value => {
-    dispatch(setSearch(''))
+  const handleSlider = (event, value) => {
     setPrice(value)
   }
 
   // Load products based on rating
   const handleStar = (event, newValue) => {
-    dispatch(setSearch(''))
     setStar(newValue)
     // If user clicks on star, filter and if he clicks again, reset filter
     !newValue ? loadAllProducts() : fetchProducts({ stars: newValue })
@@ -128,7 +127,6 @@ const Shop = () => {
 
   // Load categories based on checkbox filter
   const handleCheck = e => {
-    dispatch(setSearch(''))
     const inTheState = [...categoryIds]
     const justChecked = e.target.value
     const foundInTheState = inTheState.indexOf(justChecked) // index or -1
@@ -146,7 +144,6 @@ const Shop = () => {
 
   // Load products based on subcategory
   const handleSubcategory = subcat => {
-    dispatch(setSearch(''))
     setSubcategory(subcat)
     // If user clicks on subcategory, filter and if he clicks again, reset filter
     subcategory === subcat
@@ -156,21 +153,18 @@ const Shop = () => {
 
   // Load products based on brand
   const handleBrand = e => {
-    dispatch(setSearch(''))
     setSelectedBrand(e.target.value)
     fetchProducts({ brand: e.target.value })
   }
 
   // Load products based on color
   const handleColor = e => {
-    dispatch(setSearch(''))
     setSelectedColor(e.target.value)
     fetchProducts({ color: e.target.value })
   }
 
   // Load products based on shipping
   const handleShipping = e => {
-    dispatch(setSearch(''))
     setShipping(e.target.value)
     // If checkbox is checked, fetched products based on value, else do not filter
     e.target.checked
@@ -178,16 +172,26 @@ const Shop = () => {
       : loadAllProducts()
   }
 
-  // Reset all filters
-  const resetAllFilters = () => {
-    dispatch(setSearch(''))
-    setPrice([0, 9999])
-    setCategoryIds([])
-    setStar(null)
-    setSubcategory('')
-    setSelectedBrand('')
-    setSelectedColor('')
-    setShipping('')
+  // Reset all filters v2
+  const resetAllFilters = ({
+    resetSearch = true,
+    resetPrice = true,
+    resetCategoryIds = true,
+    resetStar = true,
+    resetSubcategory = true,
+    resetSelectedBrand = true,
+    resetSelectedColor = true,
+    resetShipping = true,
+  }) => {
+    loadAllProducts()
+    if (resetSearch) dispatch(setSearch(''))
+    if (resetPrice) setPrice([0, 9999])
+    if (resetCategoryIds) setCategoryIds([])
+    if (resetStar) setStar(null)
+    if (resetSubcategory) setSubcategory('')
+    if (resetSelectedBrand) setSelectedBrand('')
+    if (resetSelectedColor) setSelectedColor('')
+    if (resetShipping) setShipping('')
   }
 
   // Ant Design filter menu items
@@ -213,7 +217,12 @@ const Shop = () => {
         {
           type: 'group',
           label: (
-            <Slider range value={price} onChange={handleSlider} max='9999' />
+            <Slider
+              value={price}
+              onChange={handleSlider}
+              valueLabelDisplay='auto'
+              max={9999}
+            />
           ),
         },
       ],
