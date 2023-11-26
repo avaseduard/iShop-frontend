@@ -16,10 +16,7 @@ const History = () => {
   }, [])
 
   const loadUserOrders = () =>
-    getUserOrders(user.user.token).then(res => {
-      console.log(res.data)
-      setOrders(res.data)
-    })
+    getUserOrders(user.user.token).then(res => setOrders(res.data))
 
   return (
     <div className='container-fluid'>

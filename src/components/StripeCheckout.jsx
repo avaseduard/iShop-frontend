@@ -8,7 +8,7 @@ import { setCouponRedux } from '../store/reducers/coupon.reducer'
 import { createOrder, emptyUserCart } from '../functions/user'
 import { Card } from 'antd'
 import { DollarOutlined, CheckOutlined } from '@ant-design/icons'
-import logo from '../images/picture_unavailable.jpg'
+import logo from '../images/logo-color.svg'
 
 const StripeCheckout = () => {
   const dispatch = useDispatch()
