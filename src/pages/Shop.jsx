@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSearch } from '../store/reducers/search.reducer'
+// import { setSearch } from '../store/reducers/search.reducer'
 import { listAllColors } from '../functions/color'
 import { listAllBrands } from '../functions/brand'
 import { fetchProductsbyFilter, getProductsByCount } from '../functions/product'
@@ -22,7 +22,7 @@ import {
 import { Slider } from '@mui/material'
 
 const Shop = () => {
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   const { search } = useSelector(state => ({ ...state }))
   const { text } = search
   const [loading, setLoading] = useState(false)
@@ -39,31 +39,42 @@ const Shop = () => {
   const [selectedColor, setSelectedColor] = useState('')
   const [shipping, setShipping] = useState('')
 
-  // Filter method adapted to each filter/ query
-  const fetchProducts = argument => {
+  // Object to hold all filters
+  const [filters, setFilters] = useState({
+    query: '',
+    price: [0, 9999],
+    stars: null,
+    category: '',
+    subcategory: '',
+    brand: '',
+    color: '',
+    shipping: '',
+  })
+
+  // Watch for changes in the filters state and fetch whenever filters change
+  useEffect(() => {
+    fetchProducts(filters)
+  }, [filters])
+  // Fetch products with combined filters
+  const fetchProducts = async filters => {
     setLoading(true)
-    fetchProductsbyFilter(argument).then(res => {
+    try {
+      const res = await fetchProductsbyFilter(filters)
       setProducts(res.data)
+    } catch (error) {
+      console.error('Error fetching products:', error)
+    } finally {
       setLoading(false)
-    })
+    }
   }
 
-  // Load products and filter values when page loads
+  // Load filter option when the page loads
   useEffect(() => {
-    loadAllProducts()
     loadCategories()
     loadSubcategories()
     loadColors()
     loadBrands()
   }, [])
-  //
-  const loadAllProducts = () => {
-    setLoading(true)
-    getProductsByCount(12).then(res => {
-      setProducts(res.data)
-      setLoading(false)
-    })
-  }
   //
   const loadCategories = () => {
     setLoading(true)
@@ -100,20 +111,19 @@ const Shop = () => {
   // Load products based on user search input with a delay of 300 ms
   useEffect(() => {
     const delayed = setTimeout(() => {
-      fetchProducts({ query: text })
+      setFilters({ ...filters, query: text })
     }, 300)
-    if (!text) loadAllProducts()
     return () => clearTimeout(delayed)
   }, [text])
 
-  // Load products based on price slider filter with a delay of 300 ms
+  // Load products based on price slider input with a delay of 300 ms
   useEffect(() => {
     const delayed = setTimeout(() => {
-      fetchProducts({ price: price })
+      setFilters({ ...filters, price: price })
     }, 300)
     return () => clearTimeout(delayed)
   }, [price])
-  //
+  // Modify slider position in real time
   const handleSlider = (event, value) => {
     setPrice(value)
   }
@@ -121,8 +131,7 @@ const Shop = () => {
   // Load products based on rating
   const handleStar = (event, newValue) => {
     setStar(newValue)
-    // If user clicks on star, filter and if he clicks again, reset filter
-    !newValue ? loadAllProducts() : fetchProducts({ stars: newValue })
+    setFilters({ ...filters, stars: newValue })
   }
 
   // Load categories based on checkbox filter
@@ -136,65 +145,56 @@ const Shop = () => {
       : inTheState.splice(foundInTheState, 1)
     // Set category ids to state, for checkbox functionality
     setCategoryIds(inTheState)
-    // When the user deselects all checkboxes, reset filter
-    !inTheState.length
-      ? loadAllProducts()
-      : fetchProducts({ category: inTheState })
+    setFilters({ ...filters, category: inTheState })
   }
 
   // Load products based on subcategory
   const handleSubcategory = subcat => {
     setSubcategory(subcat)
-    // If user clicks on subcategory, filter and if he clicks again, reset filter
-    subcategory === subcat
-      ? loadAllProducts()
-      : fetchProducts({ subcategory: subcat })
+    setFilters({ ...filters, subcategory: subcat })
   }
 
   // Load products based on brand
   const handleBrand = e => {
     setSelectedBrand(e.target.value)
-    fetchProducts({ brand: e.target.value })
+    setFilters({ ...filters, brand: e.target.value })
   }
 
   // Load products based on color
   const handleColor = e => {
     setSelectedColor(e.target.value)
-    fetchProducts({ color: e.target.value })
+    setFilters({ ...filters, color: e.target.value })
   }
 
   // Load products based on shipping
   const handleShipping = e => {
     setShipping(e.target.value)
-    // If checkbox is checked, fetched products based on value, else do not filter
-    e.target.checked
-      ? fetchProducts({ shipping: e.target.value })
-      : loadAllProducts()
+    setFilters({ ...filters, shipping: e.target.value })
   }
 
-  // Reset all filters v2
-  const resetAllFilters = ({
-    resetSearch = true,
-    resetPrice = true,
-    resetCategoryIds = true,
-    resetStar = true,
-    resetSubcategory = true,
-    resetSelectedBrand = true,
-    resetSelectedColor = true,
-    resetShipping = true,
-  }) => {
-    loadAllProducts()
-    if (resetSearch) dispatch(setSearch(''))
-    if (resetPrice) setPrice([0, 9999])
-    if (resetCategoryIds) setCategoryIds([])
-    if (resetStar) setStar(null)
-    if (resetSubcategory) setSubcategory('')
-    if (resetSelectedBrand) setSelectedBrand('')
-    if (resetSelectedColor) setSelectedColor('')
-    if (resetShipping) setShipping('')
+  // Reset all filters
+  const resetAllFilters = () => {
+    // loadAllProducts()
+    // dispatch(setSearch(''))
+    // setPrice([0, 9999])
+    // setCategoryIds([])
+    // setStar(null)
+    // setSubcategory('')
+    // setSelectedBrand('')
+    // setSelectedColor('')
+    // setShipping('')
+    // setFilters({
+    //   query: '',
+    //   price: [0, 9999],
+    //   stars: null,
+    //   category: [],
+    //   subcategory: '',
+    //   brand: '',
+    //   color: '',
+    //   shipping: '',
+    // })
   }
 
-  // Ant Design filter menu items
   const menuItems = [
     // Reset filters button
     {
