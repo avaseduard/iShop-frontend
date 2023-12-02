@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import {
+  // useDispatch,
+  useSelector,
+} from 'react-redux'
 // import { setSearch } from '../store/reducers/search.reducer'
 import { listAllColors } from '../functions/color'
 import { listAllBrands } from '../functions/brand'
-import { fetchProductsbyFilter, getProductsByCount } from '../functions/product'
+import {
+  fetchProductsbyFilter,
+  // getProductsByCount
+} from '../functions/product'
 import { getCategories } from '../functions/category'
 import { getSubcategories } from '../functions/subcategory'
 import ProductCard from '../components/cards/ProductCard'
@@ -28,16 +34,16 @@ const Shop = () => {
   const [loading, setLoading] = useState(false)
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
-  const [categoryIds, setCategoryIds] = useState([])
+  // const [categoryIds, setCategoryIds] = useState([])
   const [price, setPrice] = useState([0, 9999])
-  const [star, setStar] = useState(null)
+  // const [star, setStar] = useState(null)
   const [subcategories, setSubcategories] = useState([])
-  const [subcategory, setSubcategory] = useState('')
+  // const [subcategory, setSubcategory] = useState('')
   const [brands, setBrands] = useState([])
-  const [selectedBrand, setSelectedBrand] = useState('')
+  // const [selectedBrand, setSelectedBrand] = useState('')
   const [colors, setColors] = useState([])
-  const [selectedColor, setSelectedColor] = useState('')
-  const [shipping, setShipping] = useState('')
+  // const [selectedColor, setSelectedColor] = useState('')
+  // const [shipping, setShipping] = useState('')
 
   // Object to hold all filters
   const [filters, setFilters] = useState({
@@ -55,6 +61,7 @@ const Shop = () => {
   useEffect(() => {
     fetchProducts(filters)
   }, [filters])
+
   // Fetch products with combined filters
   const fetchProducts = async filters => {
     setLoading(true)
@@ -68,7 +75,7 @@ const Shop = () => {
     }
   }
 
-  // Load filter option when the page loads
+  // Load filter options when page loads
   useEffect(() => {
     loadCategories()
     loadSubcategories()
@@ -123,20 +130,20 @@ const Shop = () => {
     }, 300)
     return () => clearTimeout(delayed)
   }, [price])
-  // Modify slider position in real time
+  // Show slider position in real time
   const handleSlider = (event, value) => {
     setPrice(value)
   }
 
   // Load products based on rating
   const handleStar = (event, newValue) => {
-    setStar(newValue)
+    // setStar(newValue)
     setFilters({ ...filters, stars: newValue })
   }
 
   // Load categories based on checkbox filter
   const handleCheck = e => {
-    const inTheState = [...categoryIds]
+    const inTheState = [...filters.category]
     const justChecked = e.target.value
     const foundInTheState = inTheState.indexOf(justChecked) // index or -1
     // If the category id isn't found in the state, add it, if it's found, remove it
@@ -144,31 +151,31 @@ const Shop = () => {
       ? inTheState.push(justChecked)
       : inTheState.splice(foundInTheState, 1)
     // Set category ids to state, for checkbox functionality
-    setCategoryIds(inTheState)
+    // setCategoryIds(inTheState)
     setFilters({ ...filters, category: inTheState })
   }
 
   // Load products based on subcategory
   const handleSubcategory = subcat => {
-    setSubcategory(subcat)
+    // setSubcategory(subcat)
     setFilters({ ...filters, subcategory: subcat })
   }
 
   // Load products based on brand
   const handleBrand = e => {
-    setSelectedBrand(e.target.value)
+    // setSelectedBrand(e.target.value)
     setFilters({ ...filters, brand: e.target.value })
   }
 
   // Load products based on color
   const handleColor = e => {
-    setSelectedColor(e.target.value)
+    // setSelectedColor(e.target.value)
     setFilters({ ...filters, color: e.target.value })
   }
 
   // Load products based on shipping
   const handleShipping = e => {
-    setShipping(e.target.value)
+    // setShipping(e.target.value)
     setFilters({ ...filters, shipping: e.target.value })
   }
 
@@ -235,7 +242,7 @@ const Shop = () => {
       children: [
         {
           type: 'group',
-          label: <FilterStar star={star} handleStar={handleStar} />,
+          label: <FilterStar star={filters.stars} handleStar={handleStar} />,
         },
       ],
     },
@@ -253,7 +260,7 @@ const Shop = () => {
                 value={category._id}
                 name='category'
                 onChange={handleCheck}
-                checked={categoryIds.includes(category._id)}
+                checked={filters.category.includes(category._id)}
               >
                 {category.name}
               </Checkbox>
@@ -296,7 +303,7 @@ const Shop = () => {
               key={brand._id}
               value={brand.name}
               name={brand.name}
-              checked={brand.name === selectedBrand}
+              checked={brand.name === filters.brand}
               onChange={handleBrand}
             >
               {brand.name}
@@ -318,7 +325,7 @@ const Shop = () => {
               <Radio
                 value={color.name}
                 name={color.name}
-                checked={color.name === selectedColor}
+                checked={color.name === filters.color}
                 onChange={handleColor}
               >
                 {color.name}

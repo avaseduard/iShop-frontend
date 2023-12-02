@@ -13,6 +13,7 @@ Made using:
 To do:
 - reset filters
 - style the slider
+- check/ uncheck filters
 - modify coupons name with %
 
 Helpers:
