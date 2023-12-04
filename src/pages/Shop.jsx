@@ -131,77 +131,53 @@ const Shop = () => {
     return () => clearTimeout(delayed)
   }, [price])
   // Show slider position in real time
-  const handleSlider = (event, value) => {
-    setPrice(value)
-  }
+  const handleSlider = (event, value) => setPrice(value)
 
   // Load products based on rating
-  const handleStar = (event, newValue) => {
-    // setStar(newValue)
+  const handleStar = (event, newValue) =>
     setFilters({ ...filters, stars: newValue })
-  }
 
   // Load categories based on checkbox filter
   const handleCheck = e => {
     const inTheState = [...filters.category]
-    const justChecked = e.target.value
-    const foundInTheState = inTheState.indexOf(justChecked) // index or -1
-    // If the category id isn't found in the state, add it, if it's found, remove it
-    foundInTheState === -1
-      ? inTheState.push(justChecked)
-      : inTheState.splice(foundInTheState, 1)
-    // Set category ids to state, for checkbox functionality
-    // setCategoryIds(inTheState)
-    setFilters({ ...filters, category: inTheState })
-  }
+    // When the user checks a category, push it to array, when he unchecks, detele from array
+    e.target.checked
+      ? inTheState.push(e.target.value)
+      : inTheState.splice(inTheState.indexOf(e.target.value), 1)
+    // Set the categories to filter state and if the array becomes empty, set empty string
+    inTheState.length === 0
+      ? setFilters({ ...filters, category: '' })
+      : setFilters({ ...filters, category: inTheState })
+    }
 
   // Load products based on subcategory
-  const handleSubcategory = subcat => {
-    // setSubcategory(subcat)
+  const handleSubcategory = subcat =>
     setFilters({ ...filters, subcategory: subcat })
-  }
 
   // Load products based on brand
-  const handleBrand = e => {
-    // setSelectedBrand(e.target.value)
-    setFilters({ ...filters, brand: e.target.value })
-  }
+  const handleBrand = e => setFilters({ ...filters, brand: e.target.value })
 
   // Load products based on color
-  const handleColor = e => {
-    // setSelectedColor(e.target.value)
-    setFilters({ ...filters, color: e.target.value })
-  }
+  const handleColor = e => setFilters({ ...filters, color: e.target.value })
 
   // Load products based on shipping
-  const handleShipping = e => {
-    // setShipping(e.target.value)
+  const handleShipping = e =>
     setFilters({ ...filters, shipping: e.target.value })
-  }
 
-  // Reset all filters
-  const resetAllFilters = () => {
-    // loadAllProducts()
-    // dispatch(setSearch(''))
-    // setPrice([0, 9999])
-    // setCategoryIds([])
-    // setStar(null)
-    // setSubcategory('')
-    // setSelectedBrand('')
-    // setSelectedColor('')
-    // setShipping('')
-    // setFilters({
-    //   query: '',
-    //   price: [0, 9999],
-    //   stars: null,
-    //   category: [],
-    //   subcategory: '',
-    //   brand: '',
-    //   color: '',
-    //   shipping: '',
-    // })
-  }
+  // Reset all filters functionality
+  const resetAllFilters = () =>
+    setFilters({
+      query: '',
+      price: [0, 9999],
+      stars: null,
+      category: '',
+      subcategory: '',
+      brand: '',
+      color: '',
+      shipping: '',
+    })
 
+  // Ant design menu items
   const menuItems = [
     // Reset filters button
     {
@@ -257,6 +233,7 @@ const Shop = () => {
           label: categories.map(category => (
             <div key={category._id}>
               <Checkbox
+                // checked
                 value={category._id}
                 name='category'
                 onChange={handleCheck}
