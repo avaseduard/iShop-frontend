@@ -6,15 +6,10 @@ Made using:
 - Firebase
 - Bootstrap
 - Ant Design
+- MUI
 - Toastify
 - Node.JS
 - Axios
 
 To do:
-- reset filters
 - style the slider
-- check/ uncheck filters
-- modify coupons name with %
-
-Helpers:
-- € symbol

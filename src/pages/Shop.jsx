@@ -1,15 +1,8 @@
 import { useEffect, useState } from 'react'
-import {
-  // useDispatch,
-  useSelector,
-} from 'react-redux'
-// import { setSearch } from '../store/reducers/search.reducer'
+import { useSelector } from 'react-redux'
 import { listAllColors } from '../functions/color'
 import { listAllBrands } from '../functions/brand'
-import {
-  fetchProductsbyFilter,
-  // getProductsByCount
-} from '../functions/product'
+import { fetchProductsbyFilter } from '../functions/product'
 import { getCategories } from '../functions/category'
 import { getSubcategories } from '../functions/subcategory'
 import ProductCard from '../components/cards/ProductCard'
@@ -77,42 +70,29 @@ const Shop = () => {
 
   // Load filter options when page loads
   useEffect(() => {
-    loadCategories()
-    loadSubcategories()
-    loadColors()
-    loadBrands()
+    initializeFilters()
   }, [])
   //
-  const loadCategories = () => {
-    setLoading(true)
-    getCategories().then(res => {
-      setCategories(res.data)
+  const initializeFilters = async () => {
+    try {
+      setLoading(true)
+      // Categories filter values
+      const categoriesResponse = await getCategories()
+      setCategories(categoriesResponse.data)
+      // Subcategories filter values
+      const subcategoriesResponse = await getSubcategories()
+      setSubcategories(subcategoriesResponse.data)
+      // Colors filter values
+      const colorsResponse = await listAllColors()
+      setColors(colorsResponse.data)
+      // Brands filter values
+      const brandsResponse = await listAllBrands()
+      setBrands(brandsResponse.data)
+    } catch (error) {
+      console.error('Error initializing filters:', error)
+    } finally {
       setLoading(false)
-    })
-  }
-  //
-  const loadSubcategories = () => {
-    setLoading(true)
-    getSubcategories().then(res => {
-      setSubcategories(res.data)
-      setLoading(false)
-    })
-  }
-  //
-  const loadColors = () => {
-    setLoading(true)
-    listAllColors().then(res => {
-      setLoading(false)
-      setColors(res.data)
-    })
-  }
-  //
-  const loadBrands = () => {
-    setLoading(true)
-    listAllBrands().then(res => {
-      setLoading(false)
-      setBrands(res.data)
-    })
+    }
   }
 
   // Load products based on user search input with a delay of 300 ms
@@ -137,19 +117,6 @@ const Shop = () => {
   const handleStar = (event, newValue) =>
     setFilters({ ...filters, stars: newValue })
 
-  // Load categories based on checkbox filter
-  const handleCheck = e => {
-    const inTheState = [...filters.category]
-    // When the user checks a category, push it to array, when he unchecks, detele from array
-    e.target.checked
-      ? inTheState.push(e.target.value)
-      : inTheState.splice(inTheState.indexOf(e.target.value), 1)
-    // Set the categories to filter state and if the array becomes empty, set empty string
-    inTheState.length === 0
-      ? setFilters({ ...filters, category: '' })
-      : setFilters({ ...filters, category: inTheState })
-    }
-
   // Load products based on subcategory
   const handleSubcategory = subcat =>
     setFilters({ ...filters, subcategory: subcat })
@@ -160,9 +127,20 @@ const Shop = () => {
   // Load products based on color
   const handleColor = e => setFilters({ ...filters, color: e.target.value })
 
-  // Load products based on shipping
-  const handleShipping = e =>
-    setFilters({ ...filters, shipping: e.target.value })
+  // Load products based on shipping and/ or categories
+  const handleCheckboxes = (filterKey, event) => {
+    const { checked, value } = event.target
+    const inTheState = [...filters[filterKey]]
+    // When the user checks a filter, push it to array, when he unchecks, delete from array
+    checked
+      ? inTheState.push(value)
+      : inTheState.splice(inTheState.indexOf(value), 1)
+    // Set the filter to filter state and if the array becomes empty, set empty string
+    setFilters({
+      ...filters,
+      [filterKey]: inTheState.length === 0 ? '' : inTheState,
+    })
+  }
 
   // Reset all filters functionality
   const resetAllFilters = () =>
@@ -236,7 +214,7 @@ const Shop = () => {
                 // checked
                 value={category._id}
                 name='category'
-                onChange={handleCheck}
+                onChange={e => handleCheckboxes('category', e)}
                 checked={filters.category.includes(category._id)}
               >
                 {category.name}
@@ -322,10 +300,16 @@ const Shop = () => {
           type: 'group',
           label: (
             <div>
-              <Checkbox value='Yes' onChange={handleShipping}>
+              <Checkbox
+                value='Yes'
+                onChange={e => handleCheckboxes('shipping', e)}
+              >
                 Yes
               </Checkbox>
-              <Checkbox value='No' onChange={handleShipping}>
+              <Checkbox
+                value='No'
+                onChange={e => handleCheckboxes('shipping', e)}
+              >
                 No
               </Checkbox>
             </div>
