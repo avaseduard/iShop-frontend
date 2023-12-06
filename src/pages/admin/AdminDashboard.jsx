@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import AdminNav from '../../components/nav/AdminNav'
 import { changeOrderStatus, getAllOrders } from '../../functions/admin'
-import { toast } from 'react-toastify'
+import AdminNav from '../../components/nav/AdminNav'
 import Orders from '../../components/order/Orders'
+import { toast } from 'react-toastify'
 
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([])

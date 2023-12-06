@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { auth, googleAuthProvider } from '../../firebase'
+import { createOrUpdateUser } from '../../functions/auth'
+import { setUser } from '../../store/reducers/user.reducer'
 import { MailOutlined, GoogleOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { toast } from 'react-toastify'
-import { setUser } from '../../store/reducers/user.reducer'
-import { createOrUpdateUser } from '../../functions/auth'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -23,7 +23,10 @@ const Login = () => {
     if (intended) {
       return
     } else {
-      if (user?.user?.token) navigate('/')
+      if (user?.user?.token) {
+        navigate('/')
+        toast.success('You are logged in')
+      }
     }
   }, [user, navigate])
 

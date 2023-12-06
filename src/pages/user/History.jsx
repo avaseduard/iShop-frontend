@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import UserNav from '../../components/nav/UserNav'
 import { getUserOrders } from '../../functions/user'
-import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import ShowPaymentInfo from '../../components/cards/ShowPaymentInfo'
-import { PDFDownloadLink } from '@react-pdf/renderer'
+import UserNav from '../../components/nav/UserNav'
 import Invoice from '../../components/order/Invoice'
+import { PDFDownloadLink } from '@react-pdf/renderer'
+import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons'
 
 const History = () => {
   const [orders, setOrders] = useState([])
   const { user } = useSelector(state => ({ ...state }))
 
   useEffect(() => {
-    loadUserOrders()
+      loadUserOrders()
   }, [])
 
   const loadUserOrders = () =>

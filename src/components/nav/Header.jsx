@@ -16,6 +16,7 @@ import {
 import { logoutUser } from '../../store/reducers/user.reducer'
 import Search from '../forms/Search'
 import { ReactComponent as IShopLogo } from '../../images/logo-color.svg'
+import { toast } from 'react-toastify'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -31,6 +32,7 @@ const Header = () => {
       })
     )
     navigate('/')
+    toast.error('You have been logged out')
   }
 
   const menuItems = [
@@ -77,15 +79,15 @@ const Header = () => {
           children: [
             {
               label:
-                user?.user?.role === 'subscriber' ? (
-                  <Link to='/user/history' style={{ textDecoration: 'none' }}>
-                    Dashboard
-                  </Link>
-                ) : (
+                user?.user?.role === 'admin' ? (
                   <Link
                     to='/admin/dashboard'
                     style={{ textDecoration: 'none' }}
                   >
+                    Dashboard
+                  </Link>
+                ) : (
+                  <Link to='/user/history' style={{ textDecoration: 'none' }}>
                     Dashboard
                   </Link>
                 ),
@@ -104,17 +106,8 @@ const Header = () => {
       ],
     },
     {
-      label: (
-        // <Link to='/register' style={{ textDecoration: 'none' }}>
-        //   Register
-        // </Link>
-        // <span>
-        <Search />
-        // </span>
-      ),
+      label: <Search />,
       key: 'search',
-      // icon: <UserAddOutlined />,
-      // className: 'float-end',
       style: { margin: 'auto' },
     },
     {
@@ -125,7 +118,6 @@ const Header = () => {
       ),
       key: 'register',
       icon: <UserAddOutlined />,
-      // className: 'float-end',
       style: { marginLeft: 'auto' },
     },
     {
@@ -136,21 +128,16 @@ const Header = () => {
       ),
       key: 'login',
       icon: <UserOutlined />,
-      // className: 'float-end',
     },
   ]
 
-  const onClick = e => {
-    setCurrent(e.key)
-  }
-
   return (
-      <Menu
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode='horizontal'
-        items={menuItems}
-      />
+    <Menu
+      onClick={e => setCurrent(e.key)}
+      selectedKeys={[current]}
+      mode='horizontal'
+      items={menuItems}
+    />
   )
 }
 export default Header

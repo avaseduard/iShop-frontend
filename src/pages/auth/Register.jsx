@@ -11,7 +11,10 @@ const Register = () => {
 
   // Redirect logged in users to home page
   useEffect(() => {
-  if (user && user.token) navigate('/')
+    if (user?.user?.token) {
+      navigate('/')
+      toast.success('You are logged in')
+    }
   }, [user])
 
   // Take the user's input email and send it to firebase; user we'll receive a sing in link on email
