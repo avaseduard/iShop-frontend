@@ -14,7 +14,6 @@ const CategoryHome = () => {
     getCategory(slug).then(res => {
       setCategory(res.data.category)
       setProducts(res.data.products)
-      // console.log(res.data)
       setLoading(false)
     })
   }, [])

@@ -14,7 +14,6 @@ const SubcategoryHome = () => {
     getSubcategory(slug).then(res => {
       setSubcategory(res.data.subcategory)
       setProducts(res.data.products)
-      // console.log(res.data)
       setLoading(false)
     })
   }, [])

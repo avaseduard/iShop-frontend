@@ -20,10 +20,9 @@ const UpdateAddress = () => {
   }, [])
 
   const loadAddress = () =>
-    getAddress(slug, user.user.token).then(res => {
-      console.log(res.data[0].addresses[0])
+    getAddress(slug, user.user.token).then(res =>
       setName(res.data[0].addresses[0].location)
-    })
+    )
 
   const handleSubmit = e => {
     e.preventDefault()

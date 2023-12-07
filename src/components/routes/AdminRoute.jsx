@@ -13,7 +13,6 @@ const AdminRoute = ({ children }) => {
     if (user?.user?.token) {
       currentAdmin(user?.user?.token)
         .then(res => {
-          // console.log('CURRENT ADMIN', res)
           setLoading(false)
           setOk(true)
         })

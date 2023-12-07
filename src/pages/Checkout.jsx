@@ -35,9 +35,7 @@ const Checkout = () => {
 
   const loadUserCart = () =>
     getUserCart(user.user.token).then(res => {
-      // console.log(res.data.products)
       setProducts(res.data.products)
-      // console.log(products)
       setTotal(res.data.cartTotal)
     })
 
@@ -93,7 +91,6 @@ const Checkout = () => {
 
   const createCashOrder = () => {
     createCashOrderBackend(user.user.token, coupon, address).then(res => {
-      // console.log('CREATED CASH ORDER -->', res)
       // Empty cart in local storage
       localStorage.removeItem('cart')
       // Empty cart in redux
