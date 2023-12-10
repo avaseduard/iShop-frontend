@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { listAllColors } from '../functions/color'
 import { listAllBrands } from '../functions/brand'
 import { fetchProductsbyFilter } from '../functions/product'
@@ -19,28 +19,25 @@ import {
   StarOutlined,
 } from '@ant-design/icons'
 import { Slider } from '@mui/material'
+import { setSearch } from '../store/reducers/search.reducer'
 
 const Shop = () => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   const { search } = useSelector(state => ({ ...state }))
   const { text } = search
   const [loading, setLoading] = useState(false)
   const [products, setProducts] = useState([])
   const [categories, setCategories] = useState([])
-  // const [categoryIds, setCategoryIds] = useState([])
   const [price, setPrice] = useState([0, 9999])
-  // const [star, setStar] = useState(null)
   const [subcategories, setSubcategories] = useState([])
-  // const [subcategory, setSubcategory] = useState('')
   const [brands, setBrands] = useState([])
-  // const [selectedBrand, setSelectedBrand] = useState('')
   const [colors, setColors] = useState([])
-  // const [selectedColor, setSelectedColor] = useState('')
-  // const [shipping, setShipping] = useState('')
+
+  console.log(text)
 
   // Object to hold all filters
   const [filters, setFilters] = useState({
-    query: '',
+    query: text,
     price: [0, 9999],
     stars: null,
     category: '',
@@ -143,7 +140,7 @@ const Shop = () => {
   }
 
   // Reset all filters functionality
-  const resetAllFilters = () =>
+  const resetAllFilters = () => {
     setFilters({
       query: '',
       price: [0, 9999],
@@ -154,6 +151,8 @@ const Shop = () => {
       color: '',
       shipping: '',
     })
+    dispatch(setSearch(''))
+  }
 
   // Ant design menu items
   const menuItems = [
