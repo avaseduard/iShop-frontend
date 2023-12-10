@@ -24,6 +24,7 @@ const Header = () => {
   const [current, setCurrent] = useState('home')
   const { user, cart } = useSelector(state => ({ ...state }))
 
+  // Logout functionality
   const logout = () => {
     auth.signOut()
     dispatch(
@@ -35,11 +36,14 @@ const Header = () => {
     toast.error('You have been logged out')
   }
 
+  // Ant design menu items
   const menuItems = [
+    // Website logo
     {
       label: <IShopLogo style={{ width: '50px', height: '50px' }} />,
       key: 'logo',
     },
+    // Home button
     {
       label: (
         <Link to='/' style={{ textDecoration: 'none' }}>
@@ -49,6 +53,7 @@ const Header = () => {
       key: 'home',
       icon: <HomeOutlined />,
     },
+    // Shop button
     {
       label: (
         <Link to='/shop' style={{ textDecoration: 'none' }}>
@@ -58,6 +63,7 @@ const Header = () => {
       key: 'shop',
       icon: <ShoppingOutlined />,
     },
+    // Cart button
     {
       label: (
         <Link to='/cart' style={{ textDecoration: 'none' }}>
@@ -69,66 +75,55 @@ const Header = () => {
       key: 'cart',
       icon: <ShoppingCartOutlined />,
     },
-    {
-      label: 'User',
-      key: 'user',
-      icon: <SettingOutlined />,
-      children: [
-        {
-          type: 'group',
-          children: [
-            {
-              label:
-                user?.user?.role === 'admin' ? (
-                  <Link
-                    to='/admin/dashboard'
-                    style={{ textDecoration: 'none' }}
-                  >
-                    Dashboard
-                  </Link>
-                ) : (
-                  <Link to='/user/history' style={{ textDecoration: 'none' }}>
-                    Dashboard
-                  </Link>
-                ),
-              icon: <DashboardOutlined />,
-            },
-            {
-              label: 'Logout',
-              key: 'logout',
-              icon: <LogoutOutlined />,
-              onClick: () => {
-                logout()
-              },
-            },
-          ],
-        },
-      ],
-    },
+    // Search input field and button
     {
       label: <Search />,
       key: 'search',
       style: { margin: 'auto' },
     },
-    {
-      label: (
-        <Link to='/register' style={{ textDecoration: 'none' }}>
-          Register
-        </Link>
-      ),
-      key: 'register',
-      icon: <UserAddOutlined />,
-      style: { marginLeft: 'auto' },
-    },
-    {
-      label: (
-        <Link to='/login' style={{ textDecoration: 'none' }}>
-          Login
-        </Link>
-      ),
-      key: 'login',
-      icon: <UserOutlined />,
-    },
+    // Dashboard/ register button
+    user?.user?.token
+      ? {
+          label:
+            user?.user?.role === 'admin' ? (
+              <Link to='/admin/dashboard' style={{ textDecoration: 'none' }}>
+                Dashboard
+              </Link>
+            ) : (
+              <Link to='/user/history' style={{ textDecoration: 'none' }}>
+                Dashboard
+              </Link>
+            ),
+          icon: <DashboardOutlined />,
+        }
+      : {
+          label: (
+            <Link to='/register' style={{ textDecoration: 'none' }}>
+              Register
+            </Link>
+          ),
+          key: 'register',
+          icon: <UserAddOutlined />,
+          style: { marginLeft: 'auto' },
+        },
+    // Login/ Logout button
+    user?.user?.token
+      ? {
+          label: 'Logout',
+
+          key: 'logout',
+          icon: <LogoutOutlined />,
+          onClick: () => logout(),
+        }
+      : {
+          label: (
+            <Link to='/login' style={{ textDecoration: 'none' }}>
+              Login
+            </Link>
+          ),
+          key: 'login',
+          icon: <UserOutlined />,
+        },
   ]
 
   return (

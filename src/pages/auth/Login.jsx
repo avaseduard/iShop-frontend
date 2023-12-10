@@ -17,16 +17,13 @@ const Login = () => {
   const [loading, setLoading] = useState(false)
   const { user } = useSelector(state => ({ ...state }))
 
-  // If there is an intended page where the user is coming from, return; else redirect logged in users to home page
+  // If there is an intended page where the user is coming from, return; if a logged in user lands on the login page, navigate to home page
   useEffect(() => {
     let intended = location.state
     if (intended) {
       return
     } else {
-      if (user?.user?.token) {
-        navigate('/')
-        toast.success('You are logged in')
-      }
+      if (user?.user?.token) navigate('/')
     }
   }, [user, navigate])
 

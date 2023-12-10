@@ -33,8 +33,6 @@ const Shop = () => {
   const [brands, setBrands] = useState([])
   const [colors, setColors] = useState([])
 
-  console.log(text)
-
   // Object to hold all filters
   const [filters, setFilters] = useState({
     query: text,
