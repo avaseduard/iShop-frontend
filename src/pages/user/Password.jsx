@@ -32,7 +32,7 @@ const Password = () => {
     <div className='container-fluid'>
       <div className='row'>
         <div className='col-md-2'>
-          {user.user.role === 'user' ? <UserNav /> : <AdminNav />}
+          {user.user.role === 'subscriber' ? <UserNav /> : <AdminNav />}
         </div>
 
         <div className='col'>
