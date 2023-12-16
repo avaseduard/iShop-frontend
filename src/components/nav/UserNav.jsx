@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const UserNav = () => (
   <nav>
-    <ul className='nav flex-column'>
+    <ul className='nav flex-md-row flex-lg-column justify-content-between'>
       <li className='nav-item'>
         <Link to='/user/history' className='nav-link'>
           History

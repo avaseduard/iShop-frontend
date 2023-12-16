@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import ProductCardInCheckout from '../components/cards/ProductCardInCheckout'
 import { userCart } from '../functions/user'
 import { setCashOnDelivery } from '../store/reducers/cod.reducer'
+import ProductCardInCheckout from '../components/cards/ProductCardInCheckout'
 
 const Cart = () => {
   const navigate = useNavigate()
@@ -37,26 +37,29 @@ const Cart = () => {
             </p>
           ) : (
             <>
-            <br />
+              <br />
               <h4>Shopping cart ({cartLength} items)</h4>
               <hr />
-              <table className='table table-bordered'>
-                <thead className='thead-light'>
-                  <tr>
-                    <th scope='col'>Image</th>
-                    <th scope='col'>Title</th>
-                    <th scope='col'>Price</th>
-                    <th scope='col'>Brand</th>
-                    <th scope='col'>Color</th>
-                    <th scope='col'>Count</th>
-                    <th scope='col'>Locker shipping</th>
-                    <th scope='col'>Remove</th>
-                  </tr>
-                </thead>
-                {cart.cart.map(product => (
-                  <ProductCardInCheckout key={product._id} product={product} />
-                ))}
-              </table>
+                <table className='table table-bordered table-responsive'>
+                  <thead className='thead-light'>
+                    <tr>
+                      <th scope='col'>Image</th>
+                      <th scope='col'>Title</th>
+                      <th scope='col'>Price</th>
+                      <th scope='col'>Brand</th>
+                      <th scope='col'>Color</th>
+                      <th scope='col'>Count</th>
+                      <th scope='col'>Locker shipping</th>
+                      <th scope='col'>Remove</th>
+                    </tr>
+                  </thead>
+                    {cart.cart.map(product => (
+                      <ProductCardInCheckout
+                        key={product._id}
+                        product={product}
+                      />
+                    ))}
+                </table>
             </>
           )}
         </div>

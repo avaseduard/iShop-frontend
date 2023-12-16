@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const AdminNav = () => (
   <nav>
-    <ul className='nav flex-column'>
+    <ul className='nav flex-md-row flex-lg-column justify-content-between'>
       <li className='nav-item'>
         <Link to='/admin/dashboard' className='nav-link'>
           Dashboard

@@ -36,7 +36,7 @@ const History = () => {
             <div key={index} className='m-5 p-3 card'>
               <ShowPaymentInfo order={order} />
 
-              <table className='table table-bordered'>
+              <table className='table table-bordered table-responsive'>
                 <thead className='thead-light'>
                   <tr>
                     <th scope='col'>Title</th>

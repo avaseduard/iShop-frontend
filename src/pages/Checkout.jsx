@@ -10,12 +10,11 @@ import {
 } from '../functions/user'
 import { setCart } from '../store/reducers/cart.reducer'
 import { toast } from 'react-toastify'
-import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { setCouponRedux } from '../store/reducers/coupon.reducer'
 import { setCashOnDelivery } from '../store/reducers/cod.reducer'
 import { listAllAddresses } from '../functions/address'
-import { Input, Radio, Space } from 'antd'
+import { Radio, Space } from 'antd'
 
 const Checkout = () => {
   const dispatch = useDispatch()
@@ -151,23 +150,21 @@ const Checkout = () => {
       <div className='col-md-6'>
         <br />
 
-        <h4>Order summary</h4>
-        <hr />
-        <p>{products.length} products in cart</p>
+        <h4>Order summary ({products.length} products)</h4>
         <hr />
         {products.map((product, index) => (
           <div key={index}>
             <p>
-              {product.product.title} ({product.color}) x {product.count} = $
+              {product.product.title} ({product.color}) x {product.count} = €
               {product.count * product.product.price}
             </p>
           </div>
         ))}
         <hr />
-        <p>Cart total: ${total}</p>
+        <p>Cart total: €{total}</p>
         {totalAfterDiscount > 0 && (
           <p className='text-success'>
-            Cart total after discount: ${totalAfterDiscount}
+            Cart total after discount: €{totalAfterDiscount}
           </p>
         )}
 

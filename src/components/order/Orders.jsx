@@ -8,7 +8,7 @@ const Orders = ({ orders, handleStatusChange }) => {
         <ShowPaymentInfo order={order} showStatus={false} />
       </div>
       <br />
-      <table className='table table-bordered'>
+      <table className='table table-bordered table-responsive'>
         <thead className='thead-light'>
           <tr>
             <th scope='col'>Title</th>
