@@ -168,7 +168,7 @@ const Shop = () => {
     },
     // Price filter
     {
-      label: 'Price $',
+      label: 'Price €',
       key: '1',
       icon: <DollarOutlined />,
       children: [

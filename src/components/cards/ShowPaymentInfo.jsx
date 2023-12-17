@@ -3,7 +3,7 @@ const ShowPaymentInfo = ({ order, showStatus = true }) => {
     <div>
       <p>
         <span>Order id: {order.paymentIntent.id} |</span>
-        <span> Amount: ${(order.paymentIntent.amount / 100).toFixed(2)} |</span>
+        <span> Amount: €{(order.paymentIntent.amount / 100).toFixed(2)} |</span>
         <span> Method: {order.paymentIntent.payment_method_types[0]} |</span>
         <span> Payment status: {order.paymentIntent.status} | </span>
         <span>

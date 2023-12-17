@@ -1,7 +1,7 @@
-import Jumbotron from '../components/cards/Jumbotron'
 import CategoryList from '../components/category/CategoryList'
 import BestSellers from '../components/home/BestSellers'
 import HomeCarousel from '../components/home/HomeCarousel'
+import HomeModal from '../components/home/HomeModal'
 import NewArrivals from '../components/home/NewArrivals'
 import SubcategoryList from '../components/subcategory/SubcategoryList'
 import {
@@ -13,6 +13,8 @@ import {
 
 const Home = () => (
   <>
+    <HomeModal />
+
     <HomeCarousel />
 
     <h4 className='jumbotron text-center p-3 mt-5 mb-5 display-4'>

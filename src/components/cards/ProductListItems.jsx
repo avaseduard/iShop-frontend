@@ -16,7 +16,7 @@ const ProductListItems = ({ product }) => {
     <ul className='list-group'>
       <li className='list-group-item'>
         Price{' '}
-        <span className='badge badge-success m-1 float-right'>$ {price}</span>
+        <span className='badge badge-success m-1 float-right'>€ {price}</span>
       </li>
 
       <li className='list-group-item'>

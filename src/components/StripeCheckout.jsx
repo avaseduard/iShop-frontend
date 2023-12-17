@@ -99,7 +99,7 @@ const StripeCheckout = () => {
       {!succeeded && (
         <div>
           {coupon && totalAfterDiscount ? (
-            <p className='alert alert-success'>{`Total after discount: $${totalAfterDiscount}`}</p>
+            <p className='alert alert-success'>{`Total after discount: €${totalAfterDiscount}`}</p>
           ) : (
             <p className='alert alert-danger'>No coupon applied</p>
           )}
@@ -120,11 +120,11 @@ const StripeCheckout = () => {
           }
           actions={[
             <>
-              <DollarOutlined className='text-info' /> <br /> Total: $
+              <DollarOutlined className='text-info' /> <br /> Total: €
               {cartTotal}
             </>,
             <>
-              <DollarOutlined className='text-info' /> <br /> Payable: $
+              <DollarOutlined className='text-info' /> <br /> Payable: €
               {(payable / 100).toFixed(2)}
             </>,
           ]}
