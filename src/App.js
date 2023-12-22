@@ -67,6 +67,7 @@ const App = () => {
         const idTokenResult = await user.getIdTokenResult()
         currentUser(idTokenResult.token)
           .then(response => {
+            console.log('USER RESPONSE -->', response.data)
             dispatch(
               setUser({
                 name: response.data.name,

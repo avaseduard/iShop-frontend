@@ -52,19 +52,18 @@ const HomeModal = () => {
             Some useful information for navigating the website:
           </Typography>
           <Typography id='modal-modal-description'>
-            - ed.dev.admin@proton.me and password 123456 to login for the ADMIN
+            - avas.eduard@gmail.com and password 123456 to login for the ADMIN
             experience
           </Typography>
           <Typography id='modal-modal-description'>
-            - ed.dev.user@proton.me and password 123456 to login for the USER
-            experience
+            - creating a new account doesn't work momentarily
           </Typography>
           <Typography id='modal-modal-description'>
             - to simulate a card payment use 4242 4242 4242 4242, 12/ 29, 000,
             00000
           </Typography>
           <Typography id='modal-modal-description' sx={{ mt: 2 }}>
-            Github repo:{' '}
+            Github repos:{' '}
             <a href='https://github.com/avaseduard/iShop-frontend/tree/new-env'>
               frontend
             </a>{' '}
