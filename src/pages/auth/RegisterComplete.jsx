@@ -4,7 +4,6 @@ import { auth } from '../../firebase'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 
-//! import { setCurrentUser } from '../../store/reducers/user.reducer'
 import { createOrUpdateUser } from '../../functions/auth'
 import { setUser } from '../../store/reducers/user.reducer'
 
@@ -49,7 +48,6 @@ const RegisterComplete = ({ history }) => {
         createOrUpdateUser(idTokenResult.token)
           .then(response => {
             dispatch(
-              //! setCurrentUser({
                 setUser({
                 name: response.data.name,
                 email: response.data.email,
@@ -72,7 +70,7 @@ const RegisterComplete = ({ history }) => {
     <div className='container p-5'>
       <div className='row'>
         <div className='col-md-6 offset-md-3'>
-          <h4>complete registration</h4>
+          <h4>Complete registration</h4>
           <form onSubmit={handleSubmit}>
             <input
               type='email'
@@ -91,7 +89,7 @@ const RegisterComplete = ({ history }) => {
             />
             <br />
             <button type='submit' className='btn btn-primary'>
-              submit
+              Submit
             </button>
           </form>
         </div>

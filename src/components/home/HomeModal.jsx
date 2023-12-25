@@ -52,11 +52,15 @@ const HomeModal = () => {
             Some useful information for navigating the website:
           </Typography>
           <Typography id='modal-modal-description'>
-            - avas.eduard@gmail.com and password 123456 to login for the ADMIN
+            - ed.dev.user@proton.me and password 123456 to login for the USER
             experience
           </Typography>
           <Typography id='modal-modal-description'>
-            - creating a new account doesn't work momentarily
+            - ed.dev.admin@proton.me and password 123456 to login for the ADMIN
+            experience
+          </Typography>
+          <Typography id='modal-modal-description'>
+            - creating a new account doesn't work momentarily (CORS error); repair in progress
           </Typography>
           <Typography id='modal-modal-description'>
             - to simulate a card payment use 4242 4242 4242 4242, 12/ 29, 000,
