@@ -60,7 +60,8 @@ const HomeModal = () => {
             experience
           </Typography>
           <Typography id='modal-modal-description'>
-            - creating a new account doesn't work momentarily (CORS error); repair in progress
+            - creating a new account doesn't work momentarily (CORS error);
+            repair in progress
           </Typography>
           <Typography id='modal-modal-description'>
             - to simulate a card payment use 4242 4242 4242 4242, 12/ 29, 000,
@@ -74,7 +75,8 @@ const HomeModal = () => {
             &{' '}
             <a href='https://github.com/avaseduard/iShop-backend/tree/new-env'>
               backend
-            </a>
+            </a>{' '}
+            (new-env branches)
           </Typography>
         </Box>
       </Modal>
